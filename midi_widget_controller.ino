@@ -2,6 +2,7 @@
 #include "NeatButton.h"
 
 // Add console widgets here
+// NeatButton is just an example widget that uses the built-in LED and a single button on pin 5
 NeatButton neatButton;
 ConsoleWidget* widgets[] = { &neatButton };
 
