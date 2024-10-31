@@ -1,37 +1,29 @@
 #include <Arduino.h>
 #include "NeatButton.h"
+#include "led_utils.h"
 
-NeatButton::NeatButton() : button(NEAT_BUTTON_PIN, 50) {}
+
+NeatButton::NeatButton()
+  : button(NEAT_BUTTON_PIN, 50) {}
 
 void NeatButton::setup() {
-    pinMode(NEAT_BUTTON_PIN, INPUT_PULLUP);
-    pinMode(NEAT_BUTTON_LED_PIN, OUTPUT);
+  pinMode(NEAT_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(NEAT_BUTTON_LED_PIN, OUTPUT);
 }
 
 void NeatButton::CheckDataSendMIDI() {
-    const int note = 65;
-    const int velocity = 99;
+  const int note = 65;
+  const int velocity = 99;
 
-    button.update();
+  button.update();
 
-    if (button.fallingEdge()) {
-        usbMIDI.sendNoteOn(note, velocity, NEAT_BUTTON_MIDI_CHANNEL);
-        pressTimeMs = millis();
-    }
-    if (button.risingEdge()) {
-        usbMIDI.sendNoteOff(note, velocity, NEAT_BUTTON_MIDI_CHANNEL);
-        releaseTimeMs = millis();
-    }
-}
-
-unsigned char RampToValue(char startValue, char endValue, long endTime, long currentTime) {
-  if (currentTime < 0) {
-    return 0;
-  } else if (currentTime >= 0 && currentTime < endTime) {
-    // Interpolate on the line from (0, startValue) to (endTime, endValue)
-    return (unsigned char) (startValue - (1.0 * (startValue - endValue) * currentTime / endTime));
-  } else {
-    return endValue;
+  if (button.fell()) {
+    usbMIDI.sendNoteOn(note, velocity, NEAT_BUTTON_MIDI_CHANNEL);
+    pressTimeMs = millis();
+  }
+  if (button.rose()) {
+    usbMIDI.sendNoteOff(note, velocity, NEAT_BUTTON_MIDI_CHANNEL);
+    releaseTimeMs = millis();
   }
 }
 
@@ -44,7 +36,7 @@ void NeatButton::UpdateAnimationFrame() {
   // Check that the current time is after the button press time to check that the button has ever been pressed
   if (currentTimeMs > pressTimeMs) {
     timeSincePressMs = currentTimeMs - pressTimeMs;
-    
+
     if (currentTimeMs > releaseTimeMs) {
       timeSinceReleaseMs = currentTimeMs - releaseTimeMs;
     }
