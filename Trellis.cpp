@@ -17,39 +17,31 @@ Trellis::Trellis() {}
 
 // Callback function for button presses
 TrellisCallback buttonCallback(keyEvent evt) {
-  int buttonID;
+  // Get the absolute button number and board number
+  uint8_t boardNum = evt.bit.NUM >= 16 ? 1 : 0;
+  uint8_t buttonNum = evt.bit.NUM % 16;  // Convert to 0-15 range for each board
+  int absoluteButton = boardNum * 16 + buttonNum;
   
-  // Determine which board the button is on and calculate total button ID
   if (evt.bit.EDGE == SEESAW_KEYPAD_EDGE_RISING) {
-    if (evt.bit.NUM < 16) {
-      buttonID = evt.bit.NUM;  // First board
-    } else {
-      buttonID = evt.bit.NUM + 16;  // Second board
-    }
+    Serial.print("Board: ");
+    Serial.print(boardNum);
+    Serial.print(", Local Button: ");
+    Serial.print(buttonNum);
+    Serial.print(", Absolute Button: ");
+    Serial.println(absoluteButton);
     
-    // Print button press info to serial
-    Serial.print("Button pressed: ");
-    Serial.print(buttonID);
-    Serial.print(" (RGB: ");
-    Serial.print(buttonColors[buttonID].r);
-    Serial.print(",");
-    Serial.print(buttonColors[buttonID].g);
-    Serial.print(",");
-    Serial.print(buttonColors[buttonID].b);
-    Serial.println(")");
-    
-    // Light up the corresponding LED
-    if (buttonID < 16) {
-      trellis_1.pixels.setPixelColor(buttonID, 
-        buttonColors[buttonID].r,
-        buttonColors[buttonID].g,
-        buttonColors[buttonID].b);
+    // Light up the button on the appropriate board
+    if (boardNum == 0) {
+      trellis_1.pixels.setPixelColor(buttonNum, 
+        buttonColors[absoluteButton].r,
+        buttonColors[absoluteButton].g,
+        buttonColors[absoluteButton].b);
       trellis_1.pixels.show();
     } else {
-      trellis_2.pixels.setPixelColor(buttonID - 16,
-        buttonColors[buttonID].r,
-        buttonColors[buttonID].g,
-        buttonColors[buttonID].b);
+      trellis_2.pixels.setPixelColor(buttonNum,  // Note: using buttonNum, not absoluteButton
+        buttonColors[absoluteButton].r,
+        buttonColors[absoluteButton].g,
+        buttonColors[absoluteButton].b);
       trellis_2.pixels.show();
     }
   }
@@ -57,37 +49,28 @@ TrellisCallback buttonCallback(keyEvent evt) {
 }
 
 
+// TODO: Refactor to use Adafruit_MultiTrellis trellis((Adafruit_NeoTrellis *)t_array, Y_DIM/4, X_DIM/4);
 void Trellis::setup() {
   Serial.begin(9600);
+  while(!Serial) delay(10);
   
-  // Initialize both NeoTrellis boards
+  Serial.println("\nDual NeoTrellis Test");
+  
+  // Initialize first board
+  Serial.println("Initializing first NeoTrellis (0x2E)...");
   if (!trellis_1.begin()) {
-    Serial.println("Failed to initialize NeoTrellis 1");
+    Serial.println("Failed to initialize first NeoTrellis");
     while(1);
   }
+  
+  // Initialize second board
+  Serial.println("Initializing second NeoTrellis (0x2F)...");
   if (!trellis_2.begin()) {
-    Serial.println("Failed to initialize NeoTrellis 2");
+    Serial.println("Failed to initialize second NeoTrellis");
     while(1);
   }
 
-   Serial.println("\nNeoTrellis 0x2F Test");
-  
-  Wire.begin();
-  
-  // Test direct I2C communication first
-  Serial.print("Testing I2C connection to 0x2F: ");
-  Wire.beginTransmission(0x2F);
-  byte error = Wire.endTransmission();
-  
-  if (error == 0) {
-    Serial.println("Device responded!");
-  } else {
-    Serial.print("Error code: ");
-    Serial.print(error);
-    Serial.println(" (0=success, 2=addr NAK, 3=data NAK, 4=other error)");
-  }
-
-  // Generate random RGB values for all buttons
+  // Generate random colors for all buttons
   randomSeed(analogRead(0));
   for(int i=0; i<32; i++) {
     buttonColors[i].r = random(256);
@@ -95,21 +78,42 @@ void Trellis::setup() {
     buttonColors[i].b = random(256);
   }
 
-  // Activate all keys and register callbacks
+  // Initialize first board's buttons
+  Serial.println("Setting up first board buttons...");
   for(int i=0; i<16; i++) {
     trellis_1.activateKey(i, SEESAW_KEYPAD_EDGE_RISING);
     trellis_1.registerCallback(i, buttonCallback);
+  }
+  
+  // Initialize second board's buttons
+  Serial.println("Setting up second board buttons...");
+  for(int i=0; i<16; i++) {
     trellis_2.activateKey(i, SEESAW_KEYPAD_EDGE_RISING);
     trellis_2.registerCallback(i, buttonCallback);
   }
+
+  // Test pattern - flash each board in sequence
+  Serial.println("Running test pattern...");
   
-  // Start both boards
-  trellis_1.pixels.clear();
-  trellis_2.pixels.clear();
+  // Flash first board green
+  for(int i=0; i<16; i++) {
+    trellis_1.pixels.setPixelColor(i, 0, 255, 0);
+  }
   trellis_1.pixels.show();
+  delay(500);
+  trellis_1.pixels.clear();
+  trellis_1.pixels.show();
+  
+  // Flash second board blue
+  for(int i=0; i<16; i++) {
+    trellis_2.pixels.setPixelColor(i, 0, 0, 255);
+  }
+  trellis_2.pixels.show();
+  delay(500);
+  trellis_2.pixels.clear();
   trellis_2.pixels.show();
   
-  Serial.println("NeoTrellis initialization complete");
+  Serial.println("Initialization complete!");
 }
 
 void Trellis::CheckDataSendMIDI() {
