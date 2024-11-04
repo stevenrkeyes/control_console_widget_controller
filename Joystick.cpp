@@ -4,7 +4,7 @@
 Joystick::Joystick() {}
 
 void Joystick::setup() {
-  Serial.print("setting up joystick");
+  Serial.println("setting up joystick");
   pinMode(JOYSTICK_TOP_LEFT_PIN, INPUT_PULLUP);
   pinMode(JOYSTICK_TOP_RIGHT_PIN, INPUT_PULLUP);
   pinMode(JOYSTICK_BOT_LEFT_PIN, INPUT_PULLUP);

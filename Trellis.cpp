@@ -70,6 +70,23 @@ void Trellis::setup() {
     while(1);
   }
 
+   Serial.println("\nNeoTrellis 0x2F Test");
+  
+  Wire.begin();
+  
+  // Test direct I2C communication first
+  Serial.print("Testing I2C connection to 0x2F: ");
+  Wire.beginTransmission(0x2F);
+  byte error = Wire.endTransmission();
+  
+  if (error == 0) {
+    Serial.println("Device responded!");
+  } else {
+    Serial.print("Error code: ");
+    Serial.print(error);
+    Serial.println(" (0=success, 2=addr NAK, 3=data NAK, 4=other error)");
+  }
+
   // Generate random RGB values for all buttons
   randomSeed(analogRead(0));
   for(int i=0; i<32; i++) {

@@ -16,7 +16,7 @@ ConsoleWidget* widgets[] = { &joystick, &trellis };
 void setup() {
   // TODO remove.
   Serial.begin(9600);
-  Serial.print("starting");
+  Serial.println("starting");
   for (auto widget : widgets) {
     widget->setup();
   }
