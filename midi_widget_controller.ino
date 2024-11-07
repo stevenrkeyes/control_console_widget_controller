@@ -1,6 +1,7 @@
 #include "ConsoleWidget.h"
 #include "NeatButton.h"
 #include "PowerButtons.h"
+#include "Faders.h"
 #include "ControllerVariant.h"
 
 int controllerVariant;
@@ -9,7 +10,8 @@ int controllerVariant;
 ConsoleWidget* widgetsA[] = {};
 NeatButton neatButton;
 PowerButtons powerButtons;
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons };
+Faders faders;
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders };
 ConsoleWidget* widgetsC[] = {};
 
 ConsoleWidget** widgets = nullptr;
