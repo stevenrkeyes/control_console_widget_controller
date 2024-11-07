@@ -3,6 +3,8 @@
 #include "PowerButtons.h"
 #include "Faders.h"
 #include "ControllerVariant.h"
+#include "JogWheel.h"
+
 
 int controllerVariant;
 
@@ -11,7 +13,8 @@ ConsoleWidget* widgetsA[] = {};
 NeatButton neatButton;
 PowerButtons powerButtons;
 Faders faders;
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders };
+JogWheel jogWheel;
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel };
 ConsoleWidget* widgetsC[] = {};
 
 ConsoleWidget** widgets = nullptr;
