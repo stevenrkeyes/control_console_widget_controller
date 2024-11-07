@@ -4,10 +4,9 @@
 #include "limits.h"
 #include <Bounce2.h>
 #include "ConsoleWidget.h"
+#include "pins.h"
 
-constexpr int NEAT_BUTTON_PIN = 12;
 constexpr int NEAT_BUTTON_MIDI_CHANNEL = 1;
-constexpr int NEAT_BUTTON_LED_PIN = 13;
 
 constexpr int NEAT_BUTTON_MAX_BRIGHTNESS = 255;
 constexpr int NEAT_BUTTON_MID_BRIGHTNESS = 80;

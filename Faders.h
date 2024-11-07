@@ -2,6 +2,7 @@
 #define FADERS_H
 
 #include "ConsoleWidget.h"
+#include "pins.h"
 
 // TODO: Decide if we're going to use:
 //    - 1 channel per module
@@ -29,7 +30,14 @@ public:
 
 private:
   // TODO: Refactor this to a struct?
-  int fader_pins[FADER_COUNT] = { 14, 15, 16, 17, 18, 19, 20, 21 };
+  int fader_pins[FADER_COUNT] = { FADER1_PIN,
+                                  FADER2_PIN,
+                                  FADER3_PIN,
+                                  FADER4_PIN,
+                                  FADER5_PIN,
+                                  FADER6_PIN,
+                                  FADER7_PIN,
+                                  FADER8_PIN };
   bool fader_changed[FADER_COUNT] = { false, false, false, false, false, false, false, false };
   int fader_values[FADER_COUNT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
   // C Major scale.

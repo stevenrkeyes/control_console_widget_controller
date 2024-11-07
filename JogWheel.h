@@ -3,10 +3,7 @@
 
 #include <Bounce2.h>
 #include "ConsoleWidget.h"
-
-
-constexpr int JOGWHEEL_OPTO1_PIN = 34;  // First optocoupler output connected to Teensy digital pin D2
-constexpr int JOGWHEEL_OPTO2_PIN = 35;  // Second optocoupler output connected to Teensy digital pin D3
+#include "pins.h"
 
 constexpr int JOGWHEEL_MIDI_CHANNEL = 1;
 constexpr unsigned long DIRECTION_TIMEOUT = 50;  // milliseconds
