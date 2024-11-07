@@ -4,7 +4,7 @@
 #include "Faders.h"
 #include "ControllerVariant.h"
 #include "JogWheel.h"
-
+#include "LEDGrid.h"
 
 int controllerVariant;
 
@@ -14,7 +14,8 @@ NeatButton neatButton;
 PowerButtons powerButtons;
 Faders faders;
 JogWheel jogWheel;
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel };
+LEDGrid ledGrid;
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel, &ledGrid };
 ConsoleWidget* widgetsC[] = {};
 
 ConsoleWidget** widgets = nullptr;
@@ -49,4 +50,5 @@ void loop() {
     widgets[i]->UpdateAnimationFrame();
   }
   usbMIDI.read();  // Process incoming MIDI
+  delay(2);
 }
