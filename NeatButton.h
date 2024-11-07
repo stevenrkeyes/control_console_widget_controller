@@ -9,8 +9,8 @@
 constexpr int NEAT_BUTTON_MIDI_CHANNEL = 1;
 
 constexpr int NEAT_BUTTON_MAX_BRIGHTNESS = 255;
-constexpr int NEAT_BUTTON_MID_BRIGHTNESS = 80;
-constexpr int NEAT_BUTTON_MIN_BRIGHTNESS = 0;
+constexpr int NEAT_BUTTON_MID_BRIGHTNESS = 90;
+constexpr int NEAT_BUTTON_MIN_BRIGHTNESS = 40;
 constexpr unsigned long NEAT_BUTTON_PRESS_DURATION = 350;
 constexpr unsigned long NEAT_BUTTON_RELEASE_DURATION = 200;
 

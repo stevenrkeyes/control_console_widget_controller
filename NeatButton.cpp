@@ -50,5 +50,7 @@ void NeatButton::UpdateAnimationFrame() {
       led_brightness = RampToValue(NEAT_BUTTON_MID_BRIGHTNESS, NEAT_BUTTON_MIN_BRIGHTNESS, NEAT_BUTTON_RELEASE_DURATION, timeSinceReleaseMs);
       analogWrite(NEAT_BUTTON_LED_PIN, led_brightness);
     }
+  } else {
+    analogWrite(NEAT_BUTTON_LED_PIN, NEAT_BUTTON_MIN_BRIGHTNESS);
   }
 }
