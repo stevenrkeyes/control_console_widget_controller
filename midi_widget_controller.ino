@@ -5,7 +5,6 @@
 #include "ControllerVariant.h"
 #include "JogWheel.h"
 #include "LEDGrid.h"
-#include "Trellis.h"
 #include "Joystick.h"
 
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
@@ -14,16 +13,13 @@ int controllerVariant;
 
 // Add console widgets here
 Joystick joystick;
-Trellis trellis;
-ConsoleWidget* widgetsA[] = { &joystick, &trellis };
+ConsoleWidget* widgetsA[] = { &joystick };
 
 NeatButton neatButton;
 PowerButtons powerButtons;
 Faders faders;
 JogWheel jogWheel;
 LEDGrid ledGrid;
-Joystick joystick;
-Trellis trellis;
 ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel, &ledGrid };
 
 ConsoleWidget* widgetsC[] = {};

@@ -6,7 +6,7 @@ Teensy 4.1 and 3.2 firmware that controls the flight deck widgets and sends MIDI
 
 Follow the below instructions to setup up the Arduino IDE and required libraries.
 
-##
+## Install Arduino and Teensy support
 
 Download and install the Arduino IDE (tested on version 2.3.3). Open the program.
 
@@ -16,7 +16,15 @@ In the main Arduino window, open Boards Manager by clicking the left-side board 
 
 (This is based on the [instructions from PJRC](https://www.pjrc.com/teensy/td_download.html), the team behind Teensy)
 
+## Install libraries
+
 In the Arduino main window, open Library Manager by clicking the left-side library icon, and search for and install the following libraries:
 
  - Bounce2 by Thomas O Fredericks
  - MIDIController by Josh Nishikawa
+
+## Configure Arduino
+
+Select Tools > Board > Teensy > Teensy 4.1 or 3.2 dependong on which you are using
+
+Select Tools > USB Type > MIDI
