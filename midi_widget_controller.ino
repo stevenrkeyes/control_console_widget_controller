@@ -8,12 +8,14 @@
 #include "Trellis.h"
 #include "Joystick.h"
 
+#define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
+
 int controllerVariant;
 
 // Add console widgets here
 Joystick joystick;
 Trellis trellis;
-ConsoleWidget* widgetsA[] = {&joystick, &trellis };
+ConsoleWidget* widgetsA[] = { &joystick, &trellis };
 
 NeatButton neatButton;
 PowerButtons powerButtons;
@@ -39,15 +41,15 @@ void setup() {
   switch (controllerVariant) {
     case CONTROLLER_A:
       widgets = widgetsA;
-      numWidgets = sizeof(widgetsA) / sizeof(widgetsA[0]);
+      numWidgets = ARRAY_LENGTH(widgetsA);
       break;
     case CONTROLLER_B:
       widgets = widgetsB;  // Set widgets to widgetsB
-      numWidgets = sizeof(widgetsB) / sizeof(widgetsB[0]);
+      numWidgets = ARRAY_LENGTH(widgetsB);
       break;
     case CONTROLLER_C:
       widgets = widgetsC;  // Set widgets to widgetsC
-      numWidgets = sizeof(widgetsC) / sizeof(widgetsC[0]);
+      numWidgets = ARRAY_LENGTH(widgetsC);
       break;
   }
 
