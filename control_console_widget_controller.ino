@@ -7,6 +7,7 @@
 #include "LEDGrid.h"
 #include "RedJoystick.h"
 #include "Trellis.h"
+#include "TriangleButtons.h"
 
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
 #define LOOP_DELAY_MS 2
@@ -14,18 +15,19 @@
 int controllerVariant;
 
 // Add console widgets here
+NeatButton neatButton;
 RedJoystick redJoystick;
 Trellis trellis;
-ConsoleWidget* widgetsA[] = { &redJoystick, &trellis };
+ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &trellis };
 
-NeatButton neatButton;
 PowerButtons powerButtons;
 Faders faders;
 JogWheel jogWheel;
 LEDGrid ledGrid;
 ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel, &ledGrid };
 
-ConsoleWidget* widgetsC[] = {};
+TriangleButtons triangleButtons;
+ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons };
 
 ConsoleWidget** widgets = nullptr;
 int numWidgets = 0;

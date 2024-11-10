@@ -48,4 +48,20 @@ constexpr int LED_GRID_PIN = 22;
 constexpr int JOGWHEEL_OPTO1_PIN = 34;  // First optocoupler output
 constexpr int JOGWHEEL_OPTO2_PIN = 35;  // Second optocoupler output
 
+/*********** Controller C *******************/
+
+// PowerButtons
+constexpr int TRIANGLE_BUTTONS_BUTTON1_PIN = 1;
+constexpr int TRIANGLE_BUTTONS_BUTTON2_PIN = 2;
+constexpr int TRIANGLE_BUTTONS_BUTTON3_PIN = 3;
+constexpr int TRIANGLE_BUTTONS_BUTTON4_PIN = 4;
+constexpr int TRIANGLE_BUTTONS_BUTTON5_PIN = 5;
+constexpr int TRIANGLE_BUTTONS_BUTTON6_PIN = 6;
+constexpr int TRIANGLE_BUTTONS_LED1_PIN = 7;
+constexpr int TRIANGLE_BUTTONS_LED2_PIN = 8;
+constexpr int TRIANGLE_BUTTONS_LED3_PIN = 9;
+constexpr int TRIANGLE_BUTTONS_LED4_PIN = 10;
+constexpr int TRIANGLE_BUTTONS_LED5_PIN = 11;
+constexpr int TRIANGLE_BUTTONS_LED6_PIN = 17;
+
 #endif
