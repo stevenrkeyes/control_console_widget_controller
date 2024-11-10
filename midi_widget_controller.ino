@@ -6,6 +6,7 @@
 #include "JogWheel.h"
 #include "LEDGrid.h"
 #include "RedJoystick.h"
+#include "Trellis.h"
 
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
 
@@ -13,7 +14,8 @@ int controllerVariant;
 
 // Add console widgets here
 RedJoystick redJoystick;
-ConsoleWidget* widgetsA[] = { &redJoystick };
+Trellis trellis;
+ConsoleWidget* widgetsA[] = { &redJoystick, &trellis };
 
 NeatButton neatButton;
 PowerButtons powerButtons;

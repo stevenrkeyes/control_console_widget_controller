@@ -1,4 +1,4 @@
-# MIDI Widget Controller
+a# MIDI Widget Controller
 
 Teensy 4.1 and 3.2 firmware that controls the flight deck widgets and sends MIDI commands.
 
@@ -22,6 +22,7 @@ In the Arduino main window, open Library Manager by clicking the left-side libra
 
  - Bounce2 by Thomas O Fredericks
  - MIDIController by Josh Nishikawa
+ - Adafruit seesaw Library
 
 ## Configure Arduino
 
