@@ -2,20 +2,11 @@
 #include <Bounce2.h>
 #include "JogWheel.h"
 
-
-volatile int JogWheel::pulseCount1 = 0;
-volatile int JogWheel::pulseCount2 = 0;
-volatile int JogWheel::lastPulseCount1 = 0;
-volatile int JogWheel::lastPulseCount2 = 0;
-
-// Direction detection
-volatile int JogWheel::direction = 0;  // 1 = clockwise, -1 = counterclockwise, 0 = no motion
-volatile unsigned long JogWheel::sensor1Time = 0;
-volatile unsigned long JogWheel::sensor2Time = 0;
-
-// Variables for state machine
-volatile uint8_t JogWheel::sensorStates = 0;  // Stores current state of both sensors
-volatile int8_t JogWheel::prevState = 0;      // Previous combined state
+volatile int32_t JogWheel::_position1 = 0;
+volatile int32_t JogWheel::_position2 = 0;
+volatile int32_t* JogWheel::_activePosition = &_position1;
+volatile int32_t* JogWheel::_inactivePosition = &_position2;
+volatile int8_t JogWheel::_lastState = 0b00;
 
 JogWheel::JogWheel() {
 }
@@ -23,70 +14,57 @@ JogWheel::JogWheel() {
 void JogWheel::setup() {
   pinMode(JOGWHEEL_OPTO1_PIN, INPUT);
   pinMode(JOGWHEEL_OPTO2_PIN, INPUT);
-  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO1_PIN), sensorChange1, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO2_PIN), sensorChange2, CHANGE);
+  _lastState = (digitalRead(JOGWHEEL_OPTO1_PIN) << 1) | digitalRead(JOGWHEEL_OPTO2_PIN);
+  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO1_PIN), JogWheel::updatePosition, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO2_PIN), JogWheel::updatePosition, CHANGE);
 }
 
 void JogWheel::CheckDataSendHID() {
   // Check for no motion
-  if (millis() - max(sensor1Time, sensor2Time) > MOTION_TIMEOUT) {
-    direction = 0;  // No motion detected
-  }
+  int32_t delta32 = readPositionDelta();
 
-  // Send MIDI based on direction and speed
-  int pulses = max(pulseCount1 - lastPulseCount1, pulseCount2 - lastPulseCount2);
-  if (pulses > 0) {
-    if (direction == 1) {
-      // todo: add in sending joystick values (maybe sliderLeft and sliderRight?)
-    } else if (direction == -1) {
-      // todo: add in sending joystick values (maybe sliderLeft and sliderRight?)
-    }
-  }
+  // Clamp to the limits of a uint8_t
+  int8_t delta = (int8_t)max(INT8_MIN, min(INT8_MAX, delta32));
 
-  lastPulseCount1 = pulseCount1;
-  lastPulseCount2 = pulseCount2;
+  if (delta != 0) {
+    Mouse.scroll(delta, 0);
+    //Serial.println(String(delta) + " delta");
+  }
 }
 
 void JogWheel::UpdateAnimationFrame() {
   // No LED animation needed for jogwheel
 }
 
+void JogWheel::updatePosition() {
+  int8_t newState = (digitalRead(JOGWHEEL_OPTO1_PIN) << 1) | digitalRead(JOGWHEEL_OPTO2_PIN);
 
-void JogWheel::sensorChange1() {
-  // Update state machine with current real state
-  bitWrite(sensorStates, 0, digitalRead(JOGWHEEL_OPTO1_PIN));
-  updateDirection();
-  if (digitalRead(JOGWHEEL_OPTO1_PIN) == HIGH) pulseCount1++;
-  sensor1Time = millis();
-}
-
-void JogWheel::sensorChange2() {
-  // Update state machine with current real state
-  bitWrite(sensorStates, 1, digitalRead(JOGWHEEL_OPTO2_PIN));
-  updateDirection();
-  if (digitalRead(JOGWHEEL_OPTO2_PIN) == HIGH) pulseCount2++;
-  sensor2Time = millis();
-}
-
-// Handle direction updates
-void JogWheel::updateDirection() {
-  int8_t currentState = sensorStates;
-
-  // Gray code sequence for quadrature encoder
-  switch (prevState) {
-    case 0b00:
-      direction = (currentState == 0b01) ? -1 : ((currentState == 0b10) ? 1 : direction);
-      break;
-    case 0b01:
-      direction = (currentState == 0b11) ? -1 : ((currentState == 0b00) ? 1 : direction);
-      break;
-    case 0b11:
-      direction = (currentState == 0b10) ? -1 : ((currentState == 0b01) ? 1 : direction);
-      break;
-    case 0b10:
-      direction = (currentState == 0b00) ? -1 : ((currentState == 0b11) ? 1 : direction);
-      break;
+  // Determine direction based on the state transition
+  if ((_lastState == 0b11 && newState == 0b10) ||
+  (_lastState == 0b01 && newState == 0b11) ||
+  (_lastState == 0b11 && newState == 0b10) ||
+  (_lastState == 0b10 && newState == 0b00)) {
+    (*_activePosition)++;
+    Serial.println("+");
+  } else if ((_lastState == 0b00 && newState == 0b10) ||
+  (_lastState == 0b10 && newState == 0b11) ||
+  (_lastState == 0b11 && newState == 0b01) ||
+  (_lastState == 0b01 && newState == 0b00)) {
+    (*_activePosition)--;
+    Serial.println("-");
   }
 
-  prevState = currentState;
+  _lastState = newState;
+}
+
+int32_t JogWheel::readPositionDelta() {
+  // Swap the active and inactive position buffers so that an interrupt doesn't change the value after it's read but before we've cleared it
+  volatile int32_t* temp = _activePosition;
+  _activePosition = _inactivePosition;
+  _inactivePosition = temp;
+
+  // Read the previously active position and reset it
+  int32_t delta = *_inactivePosition;
+  *_inactivePosition = 0;  // Reset the previously active buffer
+  return delta;
 }

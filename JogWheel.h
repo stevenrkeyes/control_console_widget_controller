@@ -17,24 +17,17 @@ public:
   void UpdateAnimationFrame() override;
 
 private:
-  // Store pulse counts and states
-  static volatile int pulseCount1;
-  static volatile int pulseCount2;
-  static volatile int lastPulseCount1;
-  static volatile int lastPulseCount2;
+  int32_t readPositionDelta();
 
-  // Direction detection
-  static volatile int direction;  // 1 = clockwise, -1 = counterclockwise, 0 = no motion
-  static volatile unsigned long sensor1Time;
-  static volatile unsigned long sensor2Time;
+  static volatile int32_t _position1;      // First position buffer
+  static volatile int32_t _position2;      // Second position buffer
+  static volatile int32_t* _activePosition;    // Pointer to the currently active position buffer
+  static volatile int32_t* _inactivePosition;  // Pointer to the inactive position buffer
 
-  // Variables for state machine
-  static volatile uint8_t sensorStates;  // Stores current state of both sensors
-  static volatile int8_t prevState;      // Previous combined state
+  static volatile int8_t _lastState;  // Last state of the encoder
 
-  static void sensorChange1();
-  static void sensorChange2();
-  static void updateDirection();
+  // Update the position based on encoder state
+  static void updatePosition();
 };
 
 #endif
