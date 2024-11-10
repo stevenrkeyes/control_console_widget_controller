@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "RedJoystick.h"
+#include "pins.h"
 
 RedJoystick::RedJoystick() {}
 

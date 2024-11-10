@@ -3,12 +3,6 @@
 
 #include "ConsoleWidget.h"
 
-// TODO: Change to 20-23.
-constexpr int RED_JOYSTICK_TOP_LEFT_PIN = 5;
-constexpr int RED_JOYSTICK_TOP_RIGHT_PIN = 6;
-constexpr int RED_JOYSTICK_BOT_LEFT_PIN = 7;
-constexpr int RED_JOYSTICK_BOT_RIGHT_PIN = 8;
-
 constexpr int RED_JOYSTICK_MIDI_CHANNEL = 1;
 
 constexpr int LEFT_NOTE = 10; 

@@ -4,6 +4,17 @@
 // Pin to determine which controller this is (A, B, C)
 constexpr int CONTROLLER_VARIANT_PIN = 0;
 
+/*********** Controller A *******************/
+
+// TODO: Change to 20-23.
+constexpr int RED_JOYSTICK_TOP_LEFT_PIN = 5;
+constexpr int RED_JOYSTICK_TOP_RIGHT_PIN = 6;
+constexpr int RED_JOYSTICK_BOT_LEFT_PIN = 7;
+constexpr int RED_JOYSTICK_BOT_RIGHT_PIN = 8;
+
+
+/*********** Controller B *******************/
+
 // PowerButtons
 constexpr int POWER_BUTTONS_BUTTON1_PIN = 1;
 constexpr int POWER_BUTTONS_BUTTON2_PIN = 2;
