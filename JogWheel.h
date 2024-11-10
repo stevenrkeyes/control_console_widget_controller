@@ -5,7 +5,6 @@
 #include "ConsoleWidget.h"
 #include "pins.h"
 
-constexpr int JOGWHEEL_MIDI_CHANNEL = 1;
 constexpr unsigned long DIRECTION_TIMEOUT = 50;  // milliseconds
 constexpr unsigned long MOTION_TIMEOUT = 100;    // milliseconds to wait before declaring no motion
 
@@ -14,7 +13,7 @@ class JogWheel : public ConsoleWidget {
 public:
   JogWheel();
   void setup() override;
-  void CheckDataSendMIDI() override;
+  void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
 
 private:

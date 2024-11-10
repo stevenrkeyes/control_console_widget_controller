@@ -20,13 +20,11 @@ constexpr int POWER_BUTTONS_LED_PINS[] = { POWER_BUTTONS_LED1_PIN,
                                            POWER_BUTTONS_LED4_PIN,
                                            POWER_BUTTONS_LED5_PIN };
 
-constexpr int POWER_BUTTONS_MIDI_CHANNEL = 2;
-
 class PowerButtons : public ConsoleWidget {
 public:
   PowerButtons();
   void setup() override;
-  void CheckDataSendMIDI() override;
+  void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
 
 private:

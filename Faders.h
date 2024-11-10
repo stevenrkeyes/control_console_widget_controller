@@ -8,7 +8,6 @@
 //    - 1 channel per module
 //    - 1 channel per microcontroller
 //    - 1 channel globally (defaulting to this for simplicity)
-constexpr int FADERS_MIDI_CHANNEL = 1;
 constexpr int FADER_COUNT = 8;
 
 // Uses pings 14 - 21.
@@ -25,7 +24,7 @@ class Faders : public ConsoleWidget {
 public:
   Faders();
   void setup() override;
-  void CheckDataSendMIDI() override;
+  void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
 
 private:

@@ -15,7 +15,7 @@ class LEDGrid : public ConsoleWidget {
 public:
   LEDGrid();
   void setup() override;
-  void CheckDataSendMIDI() override;
+  void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
 
 private:

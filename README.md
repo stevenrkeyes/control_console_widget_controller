@@ -21,11 +21,10 @@ In the main Arduino window, open Boards Manager by clicking the left-side board 
 In the Arduino main window, open Library Manager by clicking the left-side library icon, and search for and install the following libraries:
 
  - Bounce2 by Thomas O Fredericks
- - MIDIController by Josh Nishikawa
  - Adafruit seesaw Library
 
 ## Configure Arduino
 
 Select Tools > Board > Teensy > Teensy 4.1 or 3.2 dependong on which you are using
 
-Select Tools > USB Type > MIDI
+Select Tools > USB Type > Keyboard + Mouse + Joystick

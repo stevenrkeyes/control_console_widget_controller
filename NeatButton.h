@@ -18,7 +18,7 @@ class NeatButton : public ConsoleWidget {
 public:
   NeatButton();
   void setup() override;
-  void CheckDataSendMIDI() override;
+  void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
 
 private:

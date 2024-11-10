@@ -11,18 +11,15 @@ void NeatButton::setup() {
   pinMode(NEAT_BUTTON_LED_PIN, OUTPUT);
 }
 
-void NeatButton::CheckDataSendMIDI() {
-  const int note = 65;
-  const int velocity = 99;
-
+void NeatButton::CheckDataSendHID() {
   button.update();
 
   if (button.fell()) {
-    usbMIDI.sendNoteOn(note, velocity, NEAT_BUTTON_MIDI_CHANNEL);
+    Joystick.button(32, 1);
     pressTimeMs = millis();
   }
   if (button.rose()) {
-    usbMIDI.sendNoteOff(note, velocity, NEAT_BUTTON_MIDI_CHANNEL);
+    Joystick.button(32, 0);
     releaseTimeMs = millis();
   }
 }

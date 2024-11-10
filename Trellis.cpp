@@ -116,7 +116,7 @@ void Trellis::setup() {
   Serial.println("Initialization complete!");
 }
 
-void Trellis::CheckDataSendMIDI() {
+void Trellis::CheckDataSendHID() {
 
 }
 

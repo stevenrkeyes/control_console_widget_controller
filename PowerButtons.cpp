@@ -2,8 +2,6 @@
 #include "PowerButtons.h"
 #include "led_utils.h"
 
-
-
 PowerButtons::PowerButtons() {
   for (int i = 0; i < POWER_BUTTONS_NUM; i++) {
     buttons[i] = Bounce(POWER_BUTTONS_PINS[i], 10);
@@ -17,26 +15,24 @@ void PowerButtons::setup() {
   }
 }
 
-void PowerButtons::CheckDataSendMIDI() {
-  const int note = 65;
-  const int velocity = 99;
-
+void PowerButtons::CheckDataSendHID() {
   for (int i = 0; i < POWER_BUTTONS_NUM; i++) {
     buttons[i].update();
 
     if (buttons[i].fell()) {
       if (not activated[i]) {
-        usbMIDI.sendNoteOn(note + i, velocity, POWER_BUTTONS_MIDI_CHANNEL);
+        Joystick.button(31, 1);
         pressTimesMs[i] = millis();
         activated[i] = true;
       } else {
-        usbMIDI.sendNoteOff(note + i, velocity, POWER_BUTTONS_MIDI_CHANNEL);
+        Joystick.button(31, 0);
         pressTimesMs[i] = millis();
         activated[i] = false;
       }
     }
     if (buttons[i].rose()) {
       // do nothing; just checking to clear the flag
+      // todo: this might not be necessary, might want to check
     }
   }
 }

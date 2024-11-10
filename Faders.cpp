@@ -10,14 +10,13 @@ int MapFaderToNoteVelocity(int fader_value) {
   return max(MIN_MIDI_VELOCITY, int((fader_value * 1.0 - MIN_FADER_VALUE) / MAX_FADER_VALUE * MAX_MIDI_VELOCITY));
 }
 
-void Faders::CheckDataSendMIDI() {
+void Faders::CheckDataSendHID() {
   for (int i = 0; i < FADER_COUNT; ++i) {
     if (fader_changed[i]) {
       int note = fader_notes[i];
       int note_velocity = MapFaderToNoteVelocity(fader_values[i]);
       Serial.printf("Sending note %d with velocity %d for fader %d\n", note, note_velocity, i);
-
-      usbMIDI.sendNoteOn(note, note_velocity, FADERS_MIDI_CHANNEL);
+      // todo: add in sending joystick values (or something else)
       fader_changed[i] = false;
     }
   }

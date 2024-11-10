@@ -32,7 +32,7 @@ int numWidgets = 0;
 void setup() {
   // TODO remove.
   Serial.begin(9600);
-  Serial.println("starting");
+  Serial.println("Starting");
 
   controllerVariant = determineControllerVariant();
 
@@ -40,14 +40,17 @@ void setup() {
     case CONTROLLER_A:
       widgets = widgetsA;
       numWidgets = ARRAY_LENGTH(widgetsA);
+      Serial.println("Configured as Controller A");
       break;
     case CONTROLLER_B:
       widgets = widgetsB;  // Set widgets to widgetsB
       numWidgets = ARRAY_LENGTH(widgetsB);
+      Serial.println("Configured as Controller B");
       break;
     case CONTROLLER_C:
       widgets = widgetsC;  // Set widgets to widgetsC
       numWidgets = ARRAY_LENGTH(widgetsC);
+      Serial.println("Configured as Controller C");
       break;
   }
 
@@ -58,9 +61,8 @@ void setup() {
 
 void loop() {
   for (int i = 0; i < numWidgets; i++) {
-    widgets[i]->CheckDataSendMIDI();
+    widgets[i]->CheckDataSendHID();
     widgets[i]->UpdateAnimationFrame();
   }
-  usbMIDI.read();  // Process incoming MIDI
   delay(2);
 }

@@ -27,7 +27,7 @@ void JogWheel::setup() {
   attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO2_PIN), sensorChange2, CHANGE);
 }
 
-void JogWheel::CheckDataSendMIDI() {
+void JogWheel::CheckDataSendHID() {
   // Check for no motion
   if (millis() - max(sensor1Time, sensor2Time) > MOTION_TIMEOUT) {
     direction = 0;  // No motion detected
@@ -37,9 +37,9 @@ void JogWheel::CheckDataSendMIDI() {
   int pulses = max(pulseCount1 - lastPulseCount1, pulseCount2 - lastPulseCount2);
   if (pulses > 0) {
     if (direction == 1) {
-      usbMIDI.sendControlChange(1, pulses, JOGWHEEL_MIDI_CHANNEL);  // CW rotation
+      // todo: add in sending joystick values (maybe sliderLeft and sliderRight?)
     } else if (direction == -1) {
-      usbMIDI.sendControlChange(2, pulses, JOGWHEEL_MIDI_CHANNEL);  // CCW rotation
+      // todo: add in sending joystick values (maybe sliderLeft and sliderRight?)
     }
   }
 

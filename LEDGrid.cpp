@@ -11,7 +11,7 @@ void LEDGrid::setup() {
   FastLED.setBrightness(LED_GRID_BRIGHTNESS);
 }
 
-void LEDGrid::CheckDataSendMIDI() {
+void LEDGrid::CheckDataSendHID() {
 }
 
 void LEDGrid::UpdateAnimationFrame() {

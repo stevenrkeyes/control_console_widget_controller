@@ -9,7 +9,7 @@ class Trellis : public ConsoleWidget {
 public:
   Trellis();
   void setup() override;
-  void CheckDataSendMIDI() override;
+  void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
 
 private:

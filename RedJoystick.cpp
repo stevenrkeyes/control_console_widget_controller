@@ -12,33 +12,36 @@ void RedJoystick::setup() {
   pinMode(RED_JOYSTICK_BOT_RIGHT_PIN, INPUT_PULLUP);
 }
 
-void RedJoystick::CheckDataSendMIDI() {
-  const int velocity = 99;
+void RedJoystick::CheckDataSendHID() {
+  // Note: the top-left switch on the joystick actually reads the left axis, etc
+  bool left = digitalRead(RED_JOYSTICK_TOP_LEFT_PIN) == LOW;
+  bool top = digitalRead(RED_JOYSTICK_TOP_RIGHT_PIN) == LOW;
+  bool bot = digitalRead(RED_JOYSTICK_BOT_LEFT_PIN) == LOW;
+  bool right = digitalRead(RED_JOYSTICK_BOT_RIGHT_PIN) == LOW;
+
+  // Create a byte that contains the array of booleans
+  int buttonStates = (left << 3) | (top << 2) | (right << 1) | bot;
+
+  int angle = -1;
+
+  switch (buttonStates) {
+    case 0b0100: angle = 0; break;    // up
+    case 0b0110: angle = 45; break;   // up-right
+    case 0b0010: angle = 90; break;   // right
+    case 0b0011: angle = 135; break;  // down-right
+    case 0b0001: angle = 180; break;  // down
+    case 0b1001: angle = 225; break;  // down-left
+    case 0b1000: angle = 270; break;  // left
+    case 0b1100: angle = 315; break;  // up-left
+    default: angle = -1; break;       // No button pressed or invalid combination
+  }
+
+  if (angle != previousAngle) {
+    Joystick.hat(angle);
+    previousAngle = angle;
+  }
 }
 
 void RedJoystick::UpdateAnimationFrame() {
-  unsigned long currentTimeMs = millis();
-  
-  bool top_left = digitalRead(RED_JOYSTICK_TOP_LEFT_PIN) == LOW; 
-  bool top_right = digitalRead(RED_JOYSTICK_TOP_RIGHT_PIN) == LOW;
-  bool bot_left = digitalRead(RED_JOYSTICK_BOT_LEFT_PIN) == LOW;
-  bool bot_right = digitalRead(RED_JOYSTICK_BOT_RIGHT_PIN) == LOW;
-
-  if (top_left && top_right) {
-    Serial.println("UP");
-  } else if (top_left && bot_left) {
-    Serial.println("LEFT");
-  } else if (bot_left && bot_right) {
-    Serial.println("DOWN");
-  } else if (bot_right && top_right) {
-    Serial.println("RIGHT");
-  } else if (top_left) {
-    Serial.println("UP-LEFT");
-  } else if (top_right) {
-    Serial.println("UP-RIGHT");
-  } else if (bot_left) {
-    Serial.println("BOT-LEFT");
-  } else if (bot_right) {
-    Serial.println("BOT-RIGHT");
-  }
+  // this widget does not have any LEDs etc to animate
 }
