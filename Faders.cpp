@@ -15,7 +15,7 @@ void Faders::CheckDataSendHID() {
     if (fader_changed[i]) {
       int note = fader_notes[i];
       int note_velocity = MapFaderToNoteVelocity(fader_values[i]);
-      Serial.printf("Sending note %d with velocity %d for fader %d\n", note, note_velocity, i);
+      //Serial.printf("Sending note %d with velocity %d for fader %d\n", note, note_velocity, i);
       // todo: add in sending joystick values (or something else)
       fader_changed[i] = false;
     }

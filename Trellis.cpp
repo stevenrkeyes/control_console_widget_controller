@@ -50,12 +50,8 @@ TrellisCallback buttonCallback(keyEvent evt) {
   return 0;
 }
 
-
 // TODO: Refactor to use Adafruit_MultiTrellis trellis((Adafruit_NeoTrellis *)t_array, Y_DIM/4, X_DIM/4);
 void Trellis::setup() {
-  Serial.begin(9600);
-  while(!Serial) delay(10);
-  
   Serial.println("\nDual NeoTrellis Test");
   
   // Initialize first board
