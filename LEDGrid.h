@@ -1,6 +1,8 @@
 #ifndef LEDGRID_H
 #define LEDGRID_H
 
+// "FASTLED_INTERNAL" disables printing the version string of FastLED
+#define FASTLED_INTERNAL
 #include <FastLED.h>
 #include "ConsoleWidget.h"
 

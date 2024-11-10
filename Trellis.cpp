@@ -1,3 +1,5 @@
+// "FASTLED_INTERNAL" disables printing the version string of FastLED, which is used by Adafruit_NeoTrellis.h
+#define FASTLED_INTERNAL
 #include "Adafruit_NeoTrellis.h"
 #include "Trellis.h"
 #include <Wire.h>

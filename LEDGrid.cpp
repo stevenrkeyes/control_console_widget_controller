@@ -8,6 +8,7 @@ LEDGrid::LEDGrid() {}
 
 void LEDGrid::setup() {
   FastLED.addLeds<LED_GRID_CHIPSET, LED_GRID_PIN, LED_GRID_COLOR_ORDER>(leds, LED_GRID_NUM_LEDS).setCorrection(TypicalLEDStrip);
+  // Caution: too bright appears to brown out the teensy, so test carefully or change the power source if the brightness is increased
   FastLED.setBrightness(LED_GRID_BRIGHTNESS);
 }
 
