@@ -2,28 +2,42 @@
 #include <Bounce2.h>
 #include "JogWheel.h"
 
-volatile int32_t JogWheel::_position1 = 0;
-volatile int32_t JogWheel::_position2 = 0;
-volatile int32_t* JogWheel::_activePosition = &_position1;
-volatile int32_t* JogWheel::_inactivePosition = &_position2;
-volatile int8_t JogWheel::_lastState = 0b00;
+JogWheel* JogWheel::leftInstance = nullptr;
+JogWheel* JogWheel::rightInstance = nullptr;
 
-JogWheel::JogWheel(string position) {
-  if (position == "left") {
-    _opto1Pin = JOGWHEEL_LEFT_OPTO1_PIN;
-    _opto2Pin = JOGWHEEL_LEFT_OPTO2_PIN;
-  } else {
-    _opto1Pin = JOGWHEEL_RIGHT_OPTO1_PIN;
-    _opto2Pin = JOGWHEEL_RIGHT_OPTO2_PIN;
-  }
+JogWheel::JogWheel(const char position) {
+    if (position == 'L') {
+        JogWheel::leftInstance = this;
+        _opto1Pin = JOGWHEEL_LEFT_OPTO1_PIN;
+        _opto2Pin = JOGWHEEL_LEFT_OPTO2_PIN;
+    } else if (position == 'R') {
+        JogWheel::rightInstance = this;
+        _opto1Pin = JOGWHEEL_RIGHT_OPTO1_PIN;
+        _opto2Pin = JOGWHEEL_RIGHT_OPTO2_PIN;
+    }
+
+    // Initialize member variables.
+    _position1 = 0;
+    _position2 = 0;
+    _activePosition = &_position1;
+    _inactivePosition = &_position2;
+    _lastState = 0b00;
 }
 
 void JogWheel::setup() {
   pinMode(_opto1Pin, INPUT);
   pinMode(_opto2Pin, INPUT);
   _lastState = (digitalRead(_opto1Pin) << 1) | digitalRead(_opto2Pin);
-  attachInterrupt(digitalPinToInterrupt(_opto1Pin), JogWheel::updatePosition, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(_opto2Pin), JogWheel::updatePosition, CHANGE);
+  
+  // attachInterrupt(digitalPinToInterrupt(_opto1Pin), updatePosition, CHANGE);
+  // attachInterrupt(digitalPinToInterrupt(_opto2Pin), updatePosition, CHANGE);
+  if (this == leftInstance) {
+      attachInterrupt(digitalPinToInterrupt(_opto1Pin), handleLeftInterrupt, CHANGE);
+      attachInterrupt(digitalPinToInterrupt(_opto2Pin), handleLeftInterrupt, CHANGE);
+  } else {
+      attachInterrupt(digitalPinToInterrupt(_opto1Pin), handleRightInterrupt, CHANGE);
+      attachInterrupt(digitalPinToInterrupt(_opto2Pin), handleRightInterrupt, CHANGE);
+  }
 }
 
 void JogWheel::CheckDataSendHID() {
