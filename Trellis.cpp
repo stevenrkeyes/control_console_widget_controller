@@ -15,7 +15,7 @@ Adafruit_NeoTrellis t_array[Y_DIM/4][X_DIM/4] = {
 //pass this matrix to the multitrellis object
 Adafruit_MultiTrellis trellis((Adafruit_NeoTrellis *)t_array, Y_DIM/4, X_DIM/4);
 
-LEDTrellis::LEDTrellis() {}
+Trellis::Trellis() {}
 
 // Input a value 0 to 255 to get a color value.
 // The colors are a transition r - g - b - back to r.
@@ -44,7 +44,7 @@ TrellisCallback blink(keyEvent evt){
   return 0;
 }
 
-void LEDTrellis::setup() {
+void Trellis::setup() {
   Serial.begin(9600);
   //while(!Serial) delay(1);
 
@@ -74,10 +74,10 @@ void LEDTrellis::setup() {
 
 }
 
-void LEDTrellis::CheckDataSendHID() {
+void Trellis::CheckDataSendHID() {
   trellis.read();
+  delay(20);
 }
 
-void LEDTrellis::UpdateAnimationFrame() {
-  // No animation to update.
+void Trellis::UpdateAnimationFrame() {
 }

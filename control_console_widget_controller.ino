@@ -20,7 +20,7 @@ GlobalState state;
 // Add console widgets here
 NeatButton neatButton;
 RedJoystick redJoystick;
-LEDTrellis led_trellis;
+Trellis led_trellis;
 ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis };
 
 PowerButtons powerButtons;

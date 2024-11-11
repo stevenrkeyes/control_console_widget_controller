@@ -3,9 +3,9 @@
 
 #include "ConsoleWidget.h"
 
-class LEDTrellis : public ConsoleWidget {
+class Trellis : public ConsoleWidget {
 public:
-  LEDTrellis();
+  Trellis();
   void setup() override;
   void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
