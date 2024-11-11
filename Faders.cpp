@@ -23,7 +23,7 @@ void Faders::CheckDataSendHID() {
   }
   
   // TODO: figure out what to do with the last two faders
-  // TOOD: Consolidate this into a single loop.
+  // TODO: Consolidate this into a single loop with a check on i?
   for (int i = 0; i < FADER_COUNT - 2; ++i) {
     if (fader_changed[i]) {
       Serial.printf("Configuring an axis with value %d for fader %d\n", fader_values[i], i);
