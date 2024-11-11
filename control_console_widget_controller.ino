@@ -24,17 +24,10 @@ Trellis led_trellis;
 ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis };
 
 PowerButtons powerButtons;
-<<<<<<< HEAD
 Faders faders(state);
 JogWheel jogWheelLeft('L');
 JogWheel jogWheelRight('R');
 LEDGrid ledGrid(state);
-=======
-Faders faders;
-JogWheel jogWheelLeft('L');
-JogWheel jogWheelRight('R');
-LEDGrid ledGrid;
->>>>>>> 004423b (static stuff)
 ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid };
 
 TriangleButtons triangleButtons;
