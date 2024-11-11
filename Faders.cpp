@@ -7,7 +7,7 @@ void Faders::setup() {
   Serial.printf("Faders setup\n");
 }
 
-uint_8 mapFaderValueToHueOrSaturation(int fader_value) {
+uint8_t mapFaderValueToHueOrSaturation(int fader_value) {
   return map(fader_value, 0, 1023, 0, 255);
 }
 
@@ -28,8 +28,7 @@ void Faders::CheckDataSendHID() {
         Serial.printf("Setting LED grid value to %d for fader %d\n", mapFaderValueToHueOrSaturation(fader_values[i]), i);
       }
     }
-
-    fader_changed[i] = false;
+  }
 
   // Set global state values based on last two faders
   state.setLEDGridHue(mapFaderValueToHueOrSaturation(fader_values[FADER_COUNT - 2]));
