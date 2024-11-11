@@ -14,11 +14,8 @@ constexpr int FADER_COUNT = 8;
 constexpr int FADER_PIN_OFFSET = 14;
 
 // These may be used elsewhere; define in a more general location?
-constexpr int MAX_MIDI_VELOCITY = 127;
-constexpr int MIN_MIDI_VELOCITY = 1;
-
-constexpr int MAX_FADER_VALUE = 1023;
-constexpr int MIN_FADER_VALUE = 0;
+constexpr int MAX_AXIS_VALUE = 1023;
+constexpr int MIN_AXIS_VALUE = 0;
 
 class Faders : public ConsoleWidget {
 public:
@@ -37,6 +34,10 @@ private:
                                   FADER6_PIN,
                                   FADER7_PIN,
                                   FADER8_PIN };
+
+  void (*fader_changed_callbacks[FADER_COUNT])() = { Joystick.X, Joystick.Y, Joystick.Z, Joystick.Zrotate, Joystick.sliderLeft, Joystick.sliderRight, nullptr, nullptr };
+
+  // TODO: Refactor this to a struct?
   bool fader_changed[FADER_COUNT] = { false, false, false, false, false, false, false, false };
   int fader_values[FADER_COUNT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
   // C Major scale.
