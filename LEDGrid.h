@@ -14,8 +14,9 @@
 
 
 class LEDGrid : public ConsoleWidget {
+  GlobalState& state;
 public:
-  LEDGrid();
+  LEDGrid(GlobalState& state);
   void setup() override;
   void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;

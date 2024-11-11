@@ -4,7 +4,7 @@
 #include "pins.h"
 
 
-LEDGrid::LEDGrid() {}
+LEDGrid::LEDGrid(GlobalState& state) : state(state) {}
 
 void LEDGrid::setup() {
   FastLED.addLeds<LED_GRID_CHIPSET, LED_GRID_PIN, LED_GRID_COLOR_ORDER>(leds, LED_GRID_NUM_LEDS).setCorrection(TypicalLEDStrip);
@@ -16,10 +16,11 @@ void LEDGrid::CheckDataSendHID() {
 }
 
 void LEDGrid::UpdateAnimationFrame() {
-  uint8_t hue = (millis() / RAINBOW_CYCLE_SPEED) % 255;
+  uint8_t hue = state.getLEDGridHue();
+  uint8_t saturation = state.getLEDGridSaturation();
 
-  // Fill the LEDs with a rainbow starting at the calculated hue
-  fill_rainbow(leds, LED_GRID_NUM_LEDS, hue, 7);
+  // Fill the LEDs with a solid color based on state values set by last 2 faders.
+  fill_solid(leds, LED_GRID_NUM_LEDS, CHSV(hue, saturation, 255));
 
   FastLED.show();
 }
