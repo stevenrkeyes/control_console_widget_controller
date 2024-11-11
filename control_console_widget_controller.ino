@@ -30,7 +30,7 @@ LEDGrid ledGrid(state);
 ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel, &ledGrid };
 
 TriangleButtons triangleButtons;
-ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons, &faders };
+ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons };
 
 ConsoleWidget** widgets = nullptr;
 int numWidgets = 0;
