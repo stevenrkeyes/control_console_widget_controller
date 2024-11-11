@@ -10,9 +10,6 @@
 //    - 1 channel globally (defaulting to this for simplicity)
 constexpr int FADER_COUNT = 8;
 
-// Uses pings 14 - 21.
-constexpr int FADER_PIN_OFFSET = 14;
-
 // These may be used elsewhere; define in a more general location?
 constexpr int MAX_AXIS_VALUE = 1023;
 constexpr int MIN_AXIS_VALUE = 0;
@@ -35,7 +32,17 @@ private:
                                   FADER7_PIN,
                                   FADER8_PIN };
 
-  void (*fader_changed_callbacks[FADER_COUNT])() = { Joystick.X, Joystick.Y, Joystick.Z, Joystick.Zrotate, Joystick.sliderLeft, Joystick.sliderRight, nullptr, nullptr };
+  // TODO: Change last two function pointers to something else.
+  void (usb_joystick_class::*fader_changed_callbacks[FADER_COUNT])(unsigned int) = {
+      &usb_joystick_class::X,
+      &usb_joystick_class::Y,
+      &usb_joystick_class::Z,
+      &usb_joystick_class::Zrotate,
+      &usb_joystick_class::sliderLeft,
+      &usb_joystick_class::sliderRight,
+      &usb_joystick_class::X,
+      &usb_joystick_class::Y
+  };
 
   // TODO: Refactor this to a struct?
   bool fader_changed[FADER_COUNT] = { false, false, false, false, false, false, false, false };

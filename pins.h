@@ -32,14 +32,23 @@ constexpr int NEAT_BUTTON_PIN = 12;
 constexpr int NEAT_BUTTON_LED_PIN = 13;
 
 // Faders
-constexpr int FADER1_PIN = 14;
-constexpr int FADER2_PIN = 15;
-constexpr int FADER3_PIN = 16;
-constexpr int FADER4_PIN = 17;
-constexpr int FADER5_PIN = 18;
-constexpr int FADER6_PIN = 19;
-constexpr int FADER7_PIN = 20;
-constexpr int FADER8_PIN = 21;
+// TODO: change these back to 14-21.
+// constexpr int FADER1_PIN = 14;
+// constexpr int FADER2_PIN = 15;
+// constexpr int FADER3_PIN = 16;
+// constexpr int FADER4_PIN = 17;
+// constexpr int FADER5_PIN = 18;
+// constexpr int FADER6_PIN = 19;
+// constexpr int FADER7_PIN = 20;
+// constexpr int FADER8_PIN = 21;
+constexpr int FADER1_PIN = 15;
+constexpr int FADER2_PIN = 16;
+constexpr int FADER3_PIN = 17;
+constexpr int FADER4_PIN = 18;
+constexpr int FADER5_PIN = 19;
+constexpr int FADER6_PIN = 20;
+constexpr int FADER7_PIN = 21;
+constexpr int FADER8_PIN = 22;
 
 // LEDGrid
 constexpr int LED_GRID_PIN = 22;
@@ -62,6 +71,7 @@ constexpr int TRIANGLE_BUTTONS_LED2_PIN = 8;
 constexpr int TRIANGLE_BUTTONS_LED3_PIN = 9;
 constexpr int TRIANGLE_BUTTONS_LED4_PIN = 10;
 constexpr int TRIANGLE_BUTTONS_LED5_PIN = 11;
-constexpr int TRIANGLE_BUTTONS_LED6_PIN = 17;
+// TODO change this back to 17.
+constexpr int TRIANGLE_BUTTONS_LED6_PIN = 14;
 
 #endif
