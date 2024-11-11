@@ -44,9 +44,13 @@ constexpr int FADER8_PIN = 21;
 // LEDGrid
 constexpr int LED_GRID_PIN = 22;
 
-// Jogwheel
-constexpr int JOGWHEEL_OPTO1_PIN = 34;  // First optocoupler output
-constexpr int JOGWHEEL_OPTO2_PIN = 35;  // Second optocoupler output
+// Jogwheel 1
+constexpr int JOGWHEEL_LEFT_OPTO1_PIN = 34;  // First optocoupler output
+constexpr int JOGWHEEL_LEFT_OPTO2_PIN = 35;  // Second optocoupler output
+
+// Jogwheel 2
+constexpr int JOGWHEEL_RIGHT_OPTO1_PIN = 36;  // First optocoupler output
+constexpr int JOGWHEEL_RIGHT_OPTO2_PIN = 37;  // Second optocoupler output
 
 /*********** Controller C *******************/
 

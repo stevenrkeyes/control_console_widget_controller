@@ -2,21 +2,40 @@
 #include <Bounce2.h>
 #include "JogWheel.h"
 
-volatile int32_t JogWheel::_position1 = 0;
-volatile int32_t JogWheel::_position2 = 0;
-volatile int32_t* JogWheel::_activePosition = &_position1;
-volatile int32_t* JogWheel::_inactivePosition = &_position2;
-volatile int8_t JogWheel::_lastState = 0b00;
+JogWheel* JogWheel::leftInstance = nullptr;
+JogWheel* JogWheel::rightInstance = nullptr;
 
-JogWheel::JogWheel() {
+JogWheel::JogWheel(const char position) {
+    if (position == 'L') {
+        JogWheel::leftInstance = this;
+        _opto1Pin = JOGWHEEL_LEFT_OPTO1_PIN;
+        _opto2Pin = JOGWHEEL_LEFT_OPTO2_PIN;
+    } else if (position == 'R') {
+        JogWheel::rightInstance = this;
+        _opto1Pin = JOGWHEEL_RIGHT_OPTO1_PIN;
+        _opto2Pin = JOGWHEEL_RIGHT_OPTO2_PIN;
+    }
+
+    // Initialize instance-level variables.
+    _position1 = 0;
+    _position2 = 0;
+    _activePosition = &_position1;
+    _inactivePosition = &_position2;
+    _lastState = 0b00;
 }
 
 void JogWheel::setup() {
-  pinMode(JOGWHEEL_OPTO1_PIN, INPUT);
-  pinMode(JOGWHEEL_OPTO2_PIN, INPUT);
-  _lastState = (digitalRead(JOGWHEEL_OPTO1_PIN) << 1) | digitalRead(JOGWHEEL_OPTO2_PIN);
-  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO1_PIN), JogWheel::updatePosition, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO2_PIN), JogWheel::updatePosition, CHANGE);
+  pinMode(_opto1Pin, INPUT);
+  pinMode(_opto2Pin, INPUT);
+  _lastState = (digitalRead(_opto1Pin) << 1) | digitalRead(_opto2Pin);
+  
+  if (this == leftInstance) {
+      attachInterrupt(digitalPinToInterrupt(_opto1Pin), handleLeftInterrupt, CHANGE);
+      attachInterrupt(digitalPinToInterrupt(_opto2Pin), handleLeftInterrupt, CHANGE);
+  } else {
+      attachInterrupt(digitalPinToInterrupt(_opto1Pin), handleRightInterrupt, CHANGE);
+      attachInterrupt(digitalPinToInterrupt(_opto2Pin), handleRightInterrupt, CHANGE);
+  }
 }
 
 void JogWheel::CheckDataSendHID() {
@@ -37,7 +56,7 @@ void JogWheel::UpdateAnimationFrame() {
 }
 
 void JogWheel::updatePosition() {
-  int8_t newState = (digitalRead(JOGWHEEL_OPTO1_PIN) << 1) | digitalRead(JOGWHEEL_OPTO2_PIN);
+  int8_t newState = (digitalRead(_opto1Pin) << 1) | digitalRead(_opto2Pin);
 
   // Determine direction based on the state transition
   if ((_lastState == 0b11 && newState == 0b10) ||

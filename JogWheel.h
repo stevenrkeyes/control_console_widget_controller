@@ -11,7 +11,7 @@ constexpr unsigned long MOTION_TIMEOUT = 100;    // milliseconds to wait before 
 
 class JogWheel : public ConsoleWidget {
 public:
-  JogWheel();
+  JogWheel(const char position);
   void setup() override;
   void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
@@ -19,15 +19,33 @@ public:
 private:
   int32_t readPositionDelta();
 
-  static volatile int32_t _position1;      // First position buffer
-  static volatile int32_t _position2;      // Second position buffer
-  static volatile int32_t* _activePosition;    // Pointer to the currently active position buffer
-  static volatile int32_t* _inactivePosition;  // Pointer to the inactive position buffer
+  // Static instances of the jogwheel for each direction.
+  // Used in the static interrupt handlers.
+  static JogWheel *leftInstance, *rightInstance;
 
-  static volatile int8_t _lastState;  // Last state of the encoder
+  // attachInterrupt demands static functions, but we want separate instances for each direction.
+  // Therefore, declare the interrupt handlers as static functions.
+  static void handleLeftInterrupt() {
+      if (leftInstance) leftInstance->updatePosition();
+  }
+
+  static void handleRightInterrupt() {
+      if (rightInstance) rightInstance->updatePosition();
+  }
+
+  // Initialized differently for left and right jogwheels.
+  int _opto1Pin;
+  int _opto2Pin;
+
+  volatile int32_t _position1;      // First position buffer
+  volatile int32_t _position2;      // Second position buffer
+  volatile int32_t* _activePosition;    // Pointer to the currently active position buffer
+  volatile int32_t* _inactivePosition;  // Pointer to the inactive position buffer
+
+  volatile int8_t _lastState;  // Last state of the encoder
 
   // Update the position based on encoder state
-  static void updatePosition();
+  void updatePosition();
 };
 
 #endif
