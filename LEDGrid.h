@@ -5,6 +5,7 @@
 #define FASTLED_INTERNAL
 #include <FastLED.h>
 #include "ConsoleWidget.h"
+#include "GlobalState.h"
 
 #define LED_GRID_COLOR_ORDER GRB
 #define LED_GRID_CHIPSET WS2811
@@ -14,8 +15,9 @@
 
 
 class LEDGrid : public ConsoleWidget {
+  GlobalState& state;
 public:
-  LEDGrid();
+  LEDGrid(GlobalState& state);
   void setup() override;
   void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;

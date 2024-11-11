@@ -1,42 +1,40 @@
 #include <Arduino.h>
 #include "Faders.h"
 
-Faders::Faders() {}
+Faders::Faders(GlobalState& state) : state(state) {}
 
 void Faders::setup() {
+  Serial.printf("Faders setup\n");
 }
 
-int MapFaderToNoteVelocity(int fader_value) {
-  return max(MIN_MIDI_VELOCITY, int((fader_value * 1.0 - MIN_FADER_VALUE) / MAX_FADER_VALUE * MAX_MIDI_VELOCITY));
+uint8_t mapFaderValueToHueOrSaturation(int fader_value) {
+  return map(fader_value, 0, 1023, 0, 255);
 }
 
 void Faders::CheckDataSendHID() {
   for (int i = 0; i < FADER_COUNT; ++i) {
-    if (fader_changed[i]) {
-      int note = fader_notes[i];
-      int note_velocity = MapFaderToNoteVelocity(fader_values[i]);
-      //Serial.printf("Sending note %d with velocity %d for fader %d\n", note, note_velocity, i);
-      // todo: add in sending joystick values (or something else)
-      fader_changed[i] = false;
-    }
-  }
-}
-
-void Faders::UpdateAnimationFrame() {
-  // Remove if unused.
-  unsigned long currentTimeMs = millis();
-  
-  for (int i = 0; i < FADER_COUNT; ++i) {
-    int fader_pin = FADER_PIN_OFFSET + i;
-    int fader_value = analogRead(fader_pin);
+    int fader_value = analogRead(fader_pins[i]);
 
     int previous_fader_value = fader_values[i];
     
     if (abs(fader_value - previous_fader_value) >= 10) {
       fader_values[i] = fader_value;
-      fader_changed[i] = true;
-    } else {
-      fader_changed[i] = false;
+      
+      if (i < FADER_COUNT - 2) {
+        (Joystick.*fader_changed_callbacks[i])(fader_values[i]);
+        // TODO: Guard these behind a flag.
+        // Serial.printf("Configuring an axis with value %d for fader %d\n", fader_values[i], i);
+      } else {
+        // Serial.printf("Setting LED grid value to %d for fader %d\n", mapFaderValueToHueOrSaturation(fader_values[i]), i);
+      }
     }
   }
+
+  // Set global state values based on last two faders
+  state.setLEDGridHue(mapFaderValueToHueOrSaturation(fader_values[FADER_COUNT - 2]));
+  state.setLEDGridSaturation(mapFaderValueToHueOrSaturation(fader_values[FADER_COUNT - 1]));
+}
+
+void Faders::UpdateAnimationFrame() {
+  // No animation to update
 }

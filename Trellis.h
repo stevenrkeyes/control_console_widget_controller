@@ -3,8 +3,6 @@
 
 #include "ConsoleWidget.h"
 
-// TODO define trellis note use.
-
 class Trellis : public ConsoleWidget {
 public:
   Trellis();
@@ -13,8 +11,6 @@ public:
   void UpdateAnimationFrame() override;
 
 private:
-  // TODO remove.
-  bool was_high = false;
 };
 
 #endif
