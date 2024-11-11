@@ -1,5 +1,5 @@
-#ifndef LED_TRELLIS_H
-#define LED_TRELLIS_H
+#ifndef TRELLIS_H
+#define TRELLIS_H
 
 #include "ConsoleWidget.h"
 
@@ -11,8 +11,6 @@ public:
   void UpdateAnimationFrame() override;
 
 private:
-  // TODO remove.
-  bool was_high = false;
 };
 
 #endif

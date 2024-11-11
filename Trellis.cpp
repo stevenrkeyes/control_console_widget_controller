@@ -34,20 +34,21 @@ uint32_t Wheel(byte WheelPos) {
 
 //define a callback for key presses
 TrellisCallback blink(keyEvent evt){
-  
-  if(evt.bit.EDGE == SEESAW_KEYPAD_EDGE_RISING)
+  if(evt.bit.EDGE == SEESAW_KEYPAD_EDGE_RISING) {
     trellis.setPixelColor(evt.bit.NUM, Wheel(map(evt.bit.NUM, 0, X_DIM*Y_DIM, 0, 255))); //on rising
-  else if(evt.bit.EDGE == SEESAW_KEYPAD_EDGE_FALLING)
+    Serial.printf("Trellis key %d pressed\n", evt.bit.NUM);
+    Joystick.button(evt.bit.NUM, true);
+  } else if(evt.bit.EDGE == SEESAW_KEYPAD_EDGE_FALLING) {
     trellis.setPixelColor(evt.bit.NUM, 0); //off falling
-    
+    Serial.printf("Trellis key %d released\n", evt.bit.NUM);
+    Joystick.button(evt.bit.NUM, false);
+  }  
+
   trellis.show();
   return 0;
 }
 
 void Trellis::setup() {
-  Serial.begin(9600);
-  //while(!Serial) delay(1);
-
   if(!trellis.begin()){
     Serial.println("failed to begin trellis");
     while(1) delay(1);
