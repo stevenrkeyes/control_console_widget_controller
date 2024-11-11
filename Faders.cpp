@@ -12,8 +12,7 @@ uint8_t mapFaderValueToHueOrSaturation(int fader_value) {
 }
 
 void Faders::CheckDataSendHID() {
-  // TODO change 6 back to 0
-  for (int i = 6; i < FADER_COUNT; ++i) {
+  for (int i = 0; i < FADER_COUNT; ++i) {
     int fader_value = analogRead(fader_pins[i]);
 
     int previous_fader_value = fader_values[i];
@@ -23,9 +22,10 @@ void Faders::CheckDataSendHID() {
       
       if (i < FADER_COUNT - 2) {
         (Joystick.*fader_changed_callbacks[i])(fader_values[i]);
-        Serial.printf("Configuring an axis with value %d for fader %d\n", fader_values[i], i);
+        // TODO: Guard these behind a flag.
+        // Serial.printf("Configuring an axis with value %d for fader %d\n", fader_values[i], i);
       } else {
-        Serial.printf("Setting LED grid value to %d for fader %d\n", mapFaderValueToHueOrSaturation(fader_values[i]), i);
+        // Serial.printf("Setting LED grid value to %d for fader %d\n", mapFaderValueToHueOrSaturation(fader_values[i]), i);
       }
     }
   }
