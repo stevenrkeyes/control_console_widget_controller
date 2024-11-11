@@ -25,9 +25,10 @@ ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis };
 
 PowerButtons powerButtons;
 Faders faders(state);
-JogWheel jogWheel;
+JogWheel jogWheelLeft("left");
+JogWheel jogWheelRight("right");
 LEDGrid ledGrid(state);
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel, &ledGrid };
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid };
 
 TriangleButtons triangleButtons;
 ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons };

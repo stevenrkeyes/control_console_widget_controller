@@ -11,13 +11,17 @@ constexpr unsigned long MOTION_TIMEOUT = 100;    // milliseconds to wait before 
 
 class JogWheel : public ConsoleWidget {
 public:
-  JogWheel();
+  JogWheel(string position);
   void setup() override;
   void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;
 
 private:
   int32_t readPositionDelta();
+
+  // Initialized differently for left and right jogwheels.
+  int _opto1Pin;
+  int _opto2Pin;
 
   static volatile int32_t _position1;      // First position buffer
   static volatile int32_t _position2;      // Second position buffer

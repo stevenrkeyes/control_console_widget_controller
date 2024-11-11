@@ -8,15 +8,22 @@ volatile int32_t* JogWheel::_activePosition = &_position1;
 volatile int32_t* JogWheel::_inactivePosition = &_position2;
 volatile int8_t JogWheel::_lastState = 0b00;
 
-JogWheel::JogWheel() {
+JogWheel::JogWheel(string position) {
+  if (position == "left") {
+    _opto1Pin = JOGWHEEL_LEFT_OPTO1_PIN;
+    _opto2Pin = JOGWHEEL_LEFT_OPTO2_PIN;
+  } else {
+    _opto1Pin = JOGWHEEL_RIGHT_OPTO1_PIN;
+    _opto2Pin = JOGWHEEL_RIGHT_OPTO2_PIN;
+  }
 }
 
 void JogWheel::setup() {
-  pinMode(JOGWHEEL_OPTO1_PIN, INPUT);
-  pinMode(JOGWHEEL_OPTO2_PIN, INPUT);
-  _lastState = (digitalRead(JOGWHEEL_OPTO1_PIN) << 1) | digitalRead(JOGWHEEL_OPTO2_PIN);
-  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO1_PIN), JogWheel::updatePosition, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(JOGWHEEL_OPTO2_PIN), JogWheel::updatePosition, CHANGE);
+  pinMode(_opto1Pin, INPUT);
+  pinMode(_opto2Pin, INPUT);
+  _lastState = (digitalRead(_opto1Pin) << 1) | digitalRead(_opto2Pin);
+  attachInterrupt(digitalPinToInterrupt(_opto1Pin), JogWheel::updatePosition, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(_opto2Pin), JogWheel::updatePosition, CHANGE);
 }
 
 void JogWheel::CheckDataSendHID() {
@@ -37,7 +44,7 @@ void JogWheel::UpdateAnimationFrame() {
 }
 
 void JogWheel::updatePosition() {
-  int8_t newState = (digitalRead(JOGWHEEL_OPTO1_PIN) << 1) | digitalRead(JOGWHEEL_OPTO2_PIN);
+  int8_t newState = (digitalRead(_opto1Pin) << 1) | digitalRead(_opto2Pin);
 
   // Determine direction based on the state transition
   if ((_lastState == 0b11 && newState == 0b10) ||
