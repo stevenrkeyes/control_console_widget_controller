@@ -2,6 +2,7 @@
 #include <FastLED.h>
 #include "LEDGrid.h"
 #include "pins.h"
+#include "GlobalState.h"
 
 
 LEDGrid::LEDGrid(GlobalState& state) : state(state) {}

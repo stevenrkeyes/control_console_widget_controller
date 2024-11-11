@@ -5,6 +5,7 @@
 #define FASTLED_INTERNAL
 #include <FastLED.h>
 #include "ConsoleWidget.h"
+#include "GlobalState.h"
 
 #define LED_GRID_COLOR_ORDER GRB
 #define LED_GRID_CHIPSET WS2811

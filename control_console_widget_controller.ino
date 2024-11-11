@@ -14,16 +14,19 @@
 
 int controllerVariant;
 
+// State shared between widgets.
+GlobalState state;
+
 // Add console widgets here
 NeatButton neatButton;
 RedJoystick redJoystick;
-Trellis trellis;
-ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &trellis };
+LEDTrellis led_trellis;
+ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis };
 
 PowerButtons powerButtons;
-Faders faders;
+Faders faders(state);
 JogWheel jogWheel;
-LEDGrid ledGrid;
+LEDGrid ledGrid(state);
 ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheel, &ledGrid };
 
 TriangleButtons triangleButtons;
