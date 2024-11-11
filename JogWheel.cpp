@@ -16,7 +16,7 @@ JogWheel::JogWheel(const char position) {
         _opto2Pin = JOGWHEEL_RIGHT_OPTO2_PIN;
     }
 
-    // Initialize member variables.
+    // Initialize instance-level variables.
     _position1 = 0;
     _position2 = 0;
     _activePosition = &_position1;
@@ -29,8 +29,6 @@ void JogWheel::setup() {
   pinMode(_opto2Pin, INPUT);
   _lastState = (digitalRead(_opto1Pin) << 1) | digitalRead(_opto2Pin);
   
-  // attachInterrupt(digitalPinToInterrupt(_opto1Pin), updatePosition, CHANGE);
-  // attachInterrupt(digitalPinToInterrupt(_opto2Pin), updatePosition, CHANGE);
   if (this == leftInstance) {
       attachInterrupt(digitalPinToInterrupt(_opto1Pin), handleLeftInterrupt, CHANGE);
       attachInterrupt(digitalPinToInterrupt(_opto2Pin), handleLeftInterrupt, CHANGE);

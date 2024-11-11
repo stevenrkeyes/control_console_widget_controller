@@ -19,8 +19,12 @@ public:
 private:
   int32_t readPositionDelta();
 
+  // Static instances of the jogwheel for each direction.
+  // Used in the static interrupt handlers.
   static JogWheel *leftInstance, *rightInstance;
 
+  // attachInterrupt demands static functions, but we want separate instances for each direction.
+  // Therefore, declare the interrupt handlers as static functions.
   static void handleLeftInterrupt() {
       if (leftInstance) leftInstance->updatePosition();
   }
