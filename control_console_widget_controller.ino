@@ -8,6 +8,7 @@
 #include "RedJoystick.h"
 #include "Trellis.h"
 #include "TriangleButtons.h"
+#include "BigButton.h"
 
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
 #define LOOP_DELAY_MS 2
@@ -28,7 +29,8 @@ Faders faders(state);
 JogWheel jogWheelLeft('L');
 JogWheel jogWheelRight('R');
 LEDGrid ledGrid(state);
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid };
+BigButton bigButton;
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &bigButton };
 
 TriangleButtons triangleButtons;
 ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons };

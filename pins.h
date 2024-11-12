@@ -44,6 +44,9 @@ constexpr int FADER8_PIN = 21;
 // LEDGrid
 constexpr int LED_GRID_PIN = 22;
 
+// Big Button
+constexpr int BIG_BUTTON_PIN = 32;
+
 // Jogwheel 1
 constexpr int JOGWHEEL_LEFT_OPTO1_PIN = 34;  // First optocoupler output
 constexpr int JOGWHEEL_LEFT_OPTO2_PIN = 35;  // Second optocoupler output
