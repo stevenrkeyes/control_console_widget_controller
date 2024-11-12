@@ -9,6 +9,7 @@
 #include "Trellis.h"
 #include "TriangleButtons.h"
 #include "BigButton.h"
+#include "Knobs.h"
 
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
 #define LOOP_DELAY_MS 2
@@ -30,10 +31,11 @@ JogWheel jogWheelLeft('L');
 JogWheel jogWheelRight('R');
 LEDGrid ledGrid(state);
 BigButton bigButton;
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &bigButton };
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &bigButton};
 
 TriangleButtons triangleButtons;
-ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons };
+Knobs knobs;
+ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons, &knobs };
 
 ConsoleWidget** widgets = nullptr;
 int numWidgets = 0;
