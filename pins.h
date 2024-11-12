@@ -57,7 +57,7 @@ constexpr int JOGWHEEL_RIGHT_OPTO2_PIN = 37;  // Second optocoupler output
 
 /*********** Controller C *******************/
 
-// PowerButtons
+// Triangle Buttons
 constexpr int TRIANGLE_BUTTONS_BUTTON1_PIN = 1;
 constexpr int TRIANGLE_BUTTONS_BUTTON2_PIN = 2;
 constexpr int TRIANGLE_BUTTONS_BUTTON3_PIN = 3;
@@ -70,5 +70,11 @@ constexpr int TRIANGLE_BUTTONS_LED3_PIN = 9;
 constexpr int TRIANGLE_BUTTONS_LED4_PIN = 10;
 constexpr int TRIANGLE_BUTTONS_LED5_PIN = 11;
 constexpr int TRIANGLE_BUTTONS_LED6_PIN = 17;
+
+// Knobs (on controller C because it has extra joystick axis outputs)
+constexpr int KNOB1_PIN = 20;
+constexpr int KNOB2_PIN = 21;
+constexpr int KNOB3_PIN = 22;
+constexpr int KNOB4_PIN = 23;
 
 #endif
