@@ -17,15 +17,15 @@ void Faders::CheckDataSendHID() {
 
     int previous_fader_value = fader_values[i];
     
-    if (abs(fader_value - previous_fader_value) >= 10) {
+    if (abs(fader_value - previous_fader_value) >= 30) {
       fader_values[i] = fader_value;
       
       if (i < FADER_COUNT - 2) {
         (Joystick.*fader_changed_callbacks[i])(fader_values[i]);
         // TODO: Guard these behind a flag.
-        // Serial.printf("Configuring an axis with value %d for fader %d\n", fader_values[i], i);
+        Serial.printf("Configuring an axis with value %d for fader %d\n", fader_values[i], i);
       } else {
-        // Serial.printf("Setting LED grid value to %d for fader %d\n", mapFaderValueToHueOrSaturation(fader_values[i]), i);
+        Serial.printf("Setting LED grid value to %d for fader %d\n", mapFaderValueToHueOrSaturation(fader_values[i]), i);
       }
     }
   }
