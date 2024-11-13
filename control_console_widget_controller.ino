@@ -32,8 +32,8 @@ JogWheel jogWheelLeft('L');
 JogWheel jogWheelRight('R');
 LEDGrid ledGrid(state);
 BigButton bigButton;
-// Missiles missiles;
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &bigButton };
+Missiles missiles;
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &bigButton, &missiles };
 
 TriangleButtons triangleButtons;
 Knobs knobs;
