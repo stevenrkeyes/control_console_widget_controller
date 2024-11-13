@@ -16,6 +16,7 @@ void BigButton::CheckDataSendHID() {
   if (currentState != _lastState) {
     _lastState = currentState;
     Serial.printf("Big button state changed: %d\n", currentState);
+    Joystick.button(1, currentState);
   }
 }
 
