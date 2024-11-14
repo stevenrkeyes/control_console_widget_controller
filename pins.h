@@ -55,6 +55,11 @@ constexpr int JOGWHEEL_LEFT_OPTO2_PIN = 35;  // Second optocoupler output
 constexpr int JOGWHEEL_RIGHT_OPTO1_PIN = 36;  // First optocoupler output
 constexpr int JOGWHEEL_RIGHT_OPTO2_PIN = 37;  // Second optocoupler output
 
+// Missiles
+constexpr int MISSILE_SWITCH_A_PIN = 38;
+constexpr int MISSILE_SWITCH_B_PIN = 39;
+constexpr int MISSILE_SWITCH_C_PIN = 40;
+
 /*********** Controller C *******************/
 
 // Triangle Buttons
