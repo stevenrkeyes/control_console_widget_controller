@@ -46,7 +46,11 @@ void JogWheel::CheckDataSendHID() {
   int8_t delta = (int8_t)max(INT8_MIN, min(INT8_MAX, delta32));
 
   if (delta != 0) {
-    Mouse.scroll(delta, 0);
+    if (this == leftInstance) {
+      Mouse.scroll(delta, 0);
+    } else {
+      Mouse.scroll(0, delta);
+    }
     //Serial.println(String(delta) + " delta");
   }
 }
@@ -64,13 +68,21 @@ void JogWheel::updatePosition() {
   (_lastState == 0b11 && newState == 0b10) ||
   (_lastState == 0b10 && newState == 0b00)) {
     (*_activePosition)++;
-    Serial.println("+");
+    if (this == leftInstance) {
+      Serial.println("+ (left)");
+    } else {
+      Serial.println("+ (right)");
+    }
   } else if ((_lastState == 0b00 && newState == 0b10) ||
   (_lastState == 0b10 && newState == 0b11) ||
   (_lastState == 0b11 && newState == 0b01) ||
   (_lastState == 0b01 && newState == 0b00)) {
     (*_activePosition)--;
-    Serial.println("-");
+    if (this == leftInstance) {
+      Serial.println("- (left)");
+    } else {
+      Serial.println("- (right)");
+    }
   }
 
   _lastState = newState;
