@@ -11,7 +11,7 @@
 #include "BigButton.h"
 #include "Knobs.h"
 #include "Missiles.h"
-
+#include "ToggleSwitches.h"
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
 #define LOOP_DELAY_MS 2
 
@@ -25,7 +25,8 @@ NeatButton neatButton;
 RedJoystick redJoystick;
 Trellis led_trellis;
 BigButton bigButton;
-ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis, &bigButton };
+ToggleSwitches toggleSwitches;
+ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis, &bigButton, &toggleSwitches };
 
 PowerButtons powerButtons;
 Faders faders(state);

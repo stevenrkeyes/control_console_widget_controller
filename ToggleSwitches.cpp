@@ -5,7 +5,7 @@ ToggleSwitches::ToggleSwitches() {}
 
 void ToggleSwitches::setup() {
     for (int i = 0; i < TOGGLE_SWITCHES_COUNT; ++i) {
-        pinMode(_toggleSwitchPins[i], INPUT);
+        pinMode(_toggleSwitchPins[i], INPUT_PULLDOWN);
     }
     Serial.println("SETTING UP TOGGLE SWITCHES");    
 }

@@ -13,7 +13,7 @@ constexpr int TOGGLE_SWITCH2_PIN = 2;
 constexpr int TOGGLE_SWITCH3_PIN = 3;
 constexpr int TOGGLE_SWITCH4_PIN = 4;
 
-// TODO: Change to 20-23.
+// Red Joystick
 // Uses hat switch
 constexpr int RED_JOYSTICK_TOP_LEFT_PIN = 5;
 constexpr int RED_JOYSTICK_TOP_RIGHT_PIN = 6;
@@ -22,7 +22,7 @@ constexpr int RED_JOYSTICK_BOT_RIGHT_PIN = 8;
 
 // Big Button
 // Uses output button 5
-constexpr int BIG_BUTTON_PIN = 18;
+constexpr int BIG_BUTTON_PIN = 16;
 
 
 /*********** Controller B *******************/
