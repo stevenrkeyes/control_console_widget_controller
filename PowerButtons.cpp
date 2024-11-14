@@ -22,10 +22,12 @@ void PowerButtons::CheckDataSendHID() {
     if (buttons[i].fell()) {
       if (not activated[i]) {
         Joystick.button(31 - i, 1);
+        Serial.printf("Power button %d pressed\n", i);
         pressTimesMs[i] = millis();
         activated[i] = true;
       } else {
         Joystick.button(31 - i, 0);
+        Serial.printf("Power button %d released\n", i);
         pressTimesMs[i] = millis();
         activated[i] = false;
       }

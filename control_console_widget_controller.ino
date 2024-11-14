@@ -24,20 +24,20 @@ GlobalState state;
 NeatButton neatButton;
 RedJoystick redJoystick;
 Trellis led_trellis;
-ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis };
+BigButton bigButton;
+ConsoleWidget* widgetsA[] = { &neatButton, &redJoystick, &led_trellis, &bigButton };
 
 PowerButtons powerButtons;
 Faders faders(state);
 JogWheel jogWheelLeft('L');
 JogWheel jogWheelRight('R');
 LEDGrid ledGrid(state);
-BigButton bigButton;
 Missiles missiles;
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &bigButton, &missiles };
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &missiles };
 
 TriangleButtons triangleButtons;
 Knobs knobs;
-ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons, &knobs };
+ConsoleWidget* widgetsC[] = { &triangleButtons, &knobs };
 
 ConsoleWidget** widgets = nullptr;
 int numWidgets = 0;
