@@ -37,11 +37,11 @@ void NeatButton::UpdateAnimationFrame() {
     if (currentTimeMs > releaseTimeMs) {
       timeSinceReleaseMs = currentTimeMs - releaseTimeMs;
     }
-    // Check which one was more recentz
+    // Check which one was more recent
     if (timeSincePressMs < timeSinceReleaseMs) {
       // Do press animation
       led_brightness = RampToValue(NEAT_BUTTON_MAX_BRIGHTNESS, NEAT_BUTTON_MID_BRIGHTNESS, NEAT_BUTTON_PRESS_DURATION, timeSincePressMs);
-      analogWrite(NEAT_BUTTON_LED_PIN, led_brightness);\
+      analogWrite(NEAT_BUTTON_LED_PIN, led_brightness);
     } else {
       // Do release animation
       led_brightness = RampToValue(NEAT_BUTTON_MID_BRIGHTNESS, NEAT_BUTTON_MIN_BRIGHTNESS, NEAT_BUTTON_RELEASE_DURATION, timeSinceReleaseMs);
