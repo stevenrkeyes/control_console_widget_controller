@@ -14,6 +14,7 @@ void OrbReader::CheckDataSendHID() {
   if (not _orb_inserted) {
     if (digitalRead(ORB_READER_ORB_INSERTED_PIN)) {
       Serial.println("Orb Inserted");
+      Keyboard.print(" ");
       _orb_inserted = true;
     }
   } else {
