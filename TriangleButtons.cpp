@@ -24,6 +24,7 @@ void TriangleButtons::CheckDataSendHID() {
         Joystick.button(31 - i, 1);
         pressTimesMs[i] = millis();
         activated[i] = true;
+        Serial.printf("Triangle button %d pressed\n", i);
       } else {
         Joystick.button(31 - i, 0);
         pressTimesMs[i] = millis();

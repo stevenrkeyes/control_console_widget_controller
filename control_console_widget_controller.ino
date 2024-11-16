@@ -41,7 +41,7 @@ ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft
 
 TriangleButtons triangleButtons;
 Knobs knobs;
-ConsoleWidget* widgetsC[] = { &triangleButtons, &knobs };
+ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons, &knobs };
 
 ConsoleWidget** widgets = nullptr;
 int numWidgets = 0;
