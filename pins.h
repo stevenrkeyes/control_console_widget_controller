@@ -59,6 +59,11 @@ constexpr int FADER8_PIN = 21;
 // No outputs
 constexpr int LED_GRID_PIN = 22;
 
+// Orb Reader
+constexpr int ORB_READER_ORB_INSERTED_PIN = 25;
+constexpr int ORB_READER_ENERGY_LEVEL_PIN = 26;
+constexpr int ORB_READER_TOXIC_TRAIT_PIN = 27;
+
 // Jogwheel 1
 // Uses mouse scroll 1
 constexpr int JOGWHEEL_LEFT_OPTO1_PIN = 34;  // First optocoupler output

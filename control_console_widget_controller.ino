@@ -12,6 +12,8 @@
 #include "Knobs.h"
 #include "Missiles.h"
 #include "ToggleSwitches.h"
+#include "OrbReader.h"
+
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
 #define LOOP_DELAY_MS 2
 
@@ -34,7 +36,8 @@ JogWheel jogWheelLeft('L');
 JogWheel jogWheelRight('R');
 LEDGrid ledGrid(state);
 Missiles missiles;
-ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &missiles };
+OrbReader orbReader;
+ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &missiles, &orbReader };
 
 TriangleButtons triangleButtons;
 Knobs knobs;
