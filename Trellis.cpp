@@ -1,8 +1,12 @@
 #include "Adafruit_NeoTrellis.h"
 #include "Trellis.h"
+#include "GlobalState.h"
 
 #define Y_DIM 8 //number of rows of key
 #define X_DIM 4 //number of columns of keys
+
+// Define a default color value
+#define DEFAULT_COLOR 0x03c2fc
 
 //create a matrix of trellis panels
 Adafruit_NeoTrellis t_array[Y_DIM/4][X_DIM/4] = {
@@ -15,7 +19,7 @@ Adafruit_NeoTrellis t_array[Y_DIM/4][X_DIM/4] = {
 //pass this matrix to the multitrellis object
 Adafruit_MultiTrellis trellis((Adafruit_NeoTrellis *)t_array, Y_DIM/4, X_DIM/4);
 
-Trellis::Trellis() {}
+Trellis::Trellis(GlobalState& state) : state(state) {}
 
 // Input a value 0 to 255 to get a color value.
 // The colors are a transition r - g - b - back to r.
@@ -39,7 +43,7 @@ TrellisCallback blink(keyEvent evt){
     Serial.printf("Trellis key %d pressed\n", evt.bit.NUM);
     Joystick.button(evt.bit.NUM, true);
   } else if(evt.bit.EDGE == SEESAW_KEYPAD_EDGE_FALLING) {
-    trellis.setPixelColor(evt.bit.NUM, 0); //off falling
+    trellis.setPixelColor(evt.bit.NUM, DEFAULT_COLOR); //off falling
     Serial.printf("Trellis key %d released\n", evt.bit.NUM);
     Joystick.button(evt.bit.NUM, false);
   }  
@@ -67,12 +71,25 @@ void Trellis::setup() {
       trellis.activateKey(x, y, SEESAW_KEYPAD_EDGE_RISING, true);
       trellis.activateKey(x, y, SEESAW_KEYPAD_EDGE_FALLING, true);
       trellis.registerCallback(x, y, blink);
-      trellis.setPixelColor(x, y, 0x000000); //addressed with x,y
+      trellis.setPixelColor(x, y, DEFAULT_COLOR); //addressed with x,y
       trellis.show(); //show all LEDs
       delay(50);
     }
   }
+}
 
+void Trellis::FlashRed() {
+  for (int i =0; i <3; i++) {
+    for (int i = 0; i < Y_DIM * X_DIM; i++) {
+      trellis.setPixelColor(i, 0xFF0000);
+    }
+    trellis.show();
+    delay(100);
+  }
+  for (int i = 0; i < Y_DIM * X_DIM; i++) {
+    trellis.setPixelColor(i, DEFAULT_COLOR);
+  }
+  trellis.show();
 }
 
 void Trellis::CheckDataSendHID() {
@@ -81,4 +98,8 @@ void Trellis::CheckDataSendHID() {
 }
 
 void Trellis::UpdateAnimationFrame() {
+  if (state.getBigButtonState() == 1) {
+    FlashRed();
+  }
+  state.setBigButtonState(0);
 }
