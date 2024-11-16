@@ -83,7 +83,7 @@ constexpr int MISSILE_SWITCH_C_PIN = 40;
 /*********** Controller C *******************/
 
 // Triangle Buttons
-// Uses output buttons 1-6
+// Uses output buttons 26-31 (maybe need to change to just 29-31)
 constexpr int TRIANGLE_BUTTONS_BUTTON1_PIN = 1;
 constexpr int TRIANGLE_BUTTONS_BUTTON2_PIN = 2;
 constexpr int TRIANGLE_BUTTONS_BUTTON3_PIN = 3;
@@ -96,6 +96,10 @@ constexpr int TRIANGLE_BUTTONS_LED3_PIN = 9;
 constexpr int TRIANGLE_BUTTONS_LED4_PIN = 10;
 constexpr int TRIANGLE_BUTTONS_LED5_PIN = 11;
 constexpr int TRIANGLE_BUTTONS_LED6_PIN = 17;
+
+// Lever
+// Uses output button 7
+constexpr int LEVER_PIN = 16;
 
 // Knobs (on controller C because it has extra joystick axis outputs)
 // Uses axes 1-4

@@ -13,7 +13,7 @@
 #include "Missiles.h"
 #include "ToggleSwitches.h"
 #include "OrbReader.h"
-
+#include "Lever.h"
 #define ARRAY_LENGTH(array) (sizeof((array)) / sizeof((array)[0]))
 #define LOOP_DELAY_MS 2
 
@@ -41,7 +41,8 @@ ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft
 
 TriangleButtons triangleButtons;
 Knobs knobs;
-ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons, &knobs };
+Lever lever;
+ConsoleWidget* widgetsC[] = { &neatButton, &triangleButtons, &knobs, &lever };
 
 ConsoleWidget** widgets = nullptr;
 int numWidgets = 0;
