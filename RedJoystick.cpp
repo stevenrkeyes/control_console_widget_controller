@@ -39,7 +39,6 @@ void RedJoystick::CheckDataSendHID() {
   if (angle != previousAngle) {
     Joystick.hat(angle);
     previousAngle = angle;
-    Serial.println(angle);
   }
 }
 
