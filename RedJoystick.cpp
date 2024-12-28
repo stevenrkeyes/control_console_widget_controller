@@ -2,7 +2,7 @@
 #include "RedJoystick.h"
 #include "pins.h"
 
-RedJoystick::RedJoystick() {}
+RedJoystick::RedJoystick(GlobalState& state) : state(state) {}
 
 void RedJoystick::setup() {
   Serial.println("setting up joystick");
@@ -25,13 +25,13 @@ void RedJoystick::CheckDataSendHID() {
   int angle = -1;
 
   switch (buttonStates) {
-    case 0b0100: angle = 0; break;    // up
+    case 0b0100: angle = 0;  state.setJoystickState('U'); break;    // up
     case 0b0110: angle = 45; break;   // up-right
-    case 0b0010: angle = 90; break;   // right
+    case 0b0010: angle = 90; state.setJoystickState('R'); break;   // right
     case 0b0011: angle = 135; break;  // down-right
-    case 0b0001: angle = 180; break;  // down
+    case 0b0001: angle = 180; state.setJoystickState('D'); break;  // down
     case 0b1001: angle = 225; break;  // down-left
-    case 0b1000: angle = 270; break;  // left
+    case 0b1000: angle = 270; state.setJoystickState('L'); break;  // left
     case 0b1100: angle = 315; break;  // up-left
     default: angle = -1; break;       // No button pressed or invalid combination
   }
@@ -39,7 +39,6 @@ void RedJoystick::CheckDataSendHID() {
   if (angle != previousAngle) {
     Joystick.hat(angle);
     previousAngle = angle;
-    Serial.println(angle);
   }
 }
 

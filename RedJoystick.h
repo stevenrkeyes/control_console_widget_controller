@@ -2,10 +2,12 @@
 #define RED_JOYSTICK_H
 
 #include "ConsoleWidget.h"
+#include "GlobalState.h"
 
 class RedJoystick : public ConsoleWidget {
+  GlobalState& state;
 public:
-  RedJoystick();
+  RedJoystick(GlobalState& state);
   void setup() override;
   void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;

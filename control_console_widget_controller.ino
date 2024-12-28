@@ -24,7 +24,7 @@ GlobalState state;
 
 // Add console widgets here
 NeatButton neatButton;
-RedJoystick redJoystick;
+RedJoystick redJoystick(state);
 Trellis led_trellis(state);
 BigButton bigButton(state);
 ToggleSwitches toggleSwitches;
