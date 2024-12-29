@@ -3,12 +3,14 @@
 
 #include "ConsoleWidget.h"
 #include "pins.h"
+#include "GlobalState.h"
 
 constexpr int MISSILES_COUNT = 3;
 
 class Missiles : public ConsoleWidget {
+  GlobalState& state;
 public:
-  Missiles();
+  Missiles(GlobalState& state);
   void setup() override;
   void CheckDataSendHID() override;
   void UpdateAnimationFrame() override;

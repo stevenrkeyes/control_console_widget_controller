@@ -24,6 +24,7 @@ public:
 
 private:
   CRGB leds[LED_GRID_NUM_LEDS];
+  void showPulsatingBars(uint8_t hue);
 };
 
 #endif
