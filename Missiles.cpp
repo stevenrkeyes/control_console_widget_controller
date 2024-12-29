@@ -19,7 +19,6 @@ void Missiles::CheckDataSendHID() {
             Joystick.button(i + 1, new_val);
         }
     }
-    // TODO: Compute a value from 0-7 representing the current state of switches.
     uint8_t missile_switch_val = _missileValues[0] + (_missileValues[1] << 1) + (_missileValues[2] << 2);
     state.setMissileSwitchState(missile_switch_val);
 }
