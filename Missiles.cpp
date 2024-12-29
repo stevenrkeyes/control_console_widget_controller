@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Missiles.h"
 
-Missiles::Missiles() {}
+Missiles::Missiles(GlobalState& state) : state(state) {}
 
 void Missiles::setup() {
     for (int i = 0; i < MISSILES_COUNT; ++i) {
@@ -19,6 +19,8 @@ void Missiles::CheckDataSendHID() {
             Joystick.button(i + 1, new_val);
         }
     }
+    uint8_t missile_switch_val = _missileValues[0] + (_missileValues[1] << 1) + (_missileValues[2] << 2);
+    state.setMissileSwitchState(missile_switch_val);
 }
 
 void Missiles::UpdateAnimationFrame() {

@@ -7,6 +7,8 @@ class GlobalState {
 
     uint8_t bigButtonState = 0;
     char joystickState = 'R';
+
+    uint8_t missileSwitchState = 0;
 public:
     uint8_t getLEDGridHue() { return LEDGridHue; }
     void setLEDGridHue(uint8_t val) { LEDGridHue = val; }
@@ -19,6 +21,9 @@ public:
 
     char getJoystickState() { return joystickState; }
     void setJoystickState(char val) { joystickState = val; }
+
+    uint8_t getMissileSwitchState() { return missileSwitchState; }
+    void setMissileSwitchState(uint8_t val) { missileSwitchState = val; }
 };
 
 #endif

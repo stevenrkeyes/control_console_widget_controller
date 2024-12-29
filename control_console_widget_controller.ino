@@ -35,7 +35,7 @@ Faders faders(state);
 JogWheel jogWheelLeft('L');
 JogWheel jogWheelRight('R');
 LEDGrid ledGrid(state);
-Missiles missiles;
+Missiles missiles(state);
 OrbReader orbReader;
 ConsoleWidget* widgetsB[] = { &neatButton, &powerButtons, &faders, &jogWheelLeft, &jogWheelRight, &ledGrid, &missiles, &orbReader };
 

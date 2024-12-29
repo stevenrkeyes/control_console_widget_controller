@@ -89,9 +89,6 @@ void Trellis::DrawSnake() {
     // Check for OOB
     if (newHead.x < 0 || newHead.x >= X_DIM || 
         newHead.y < 0 || newHead.y >= Y_DIM) {
-        // Serial.printf("Out of bounds: %d, %d\n", newHead.x, newHead.y);
-        Serial.printf("Out of bounds: %d, %d\n", newHead.x, newHead.y);
-        Serial.printf("Was moving in: %c\n", _direction);
         ResetSnake();
         return;
     }
@@ -109,7 +106,6 @@ void Trellis::DrawSnake() {
     snake.insert(snake.begin(), newHead);
     
     // Check if pellet was eaten
-    // if (newHead.x == pellet.x && newHead.y == pellet.y) {
     if ((newHead.y * X_DIM + newHead.x) == (pellet.y * X_DIM + pellet.x)) {
         Serial.printf("Pellet eaten at: %d, %d\n", pellet.x, pellet.y);
         
