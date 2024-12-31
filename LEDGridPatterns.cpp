@@ -6,7 +6,11 @@
 constexpr int ROWS = 5;
 constexpr int COLS = 10;
 constexpr int FRAMES_PER_SECOND = 60;
+constexpr int NUM_LEDS = 50;
 
+/* 
+    General functions
+*/
 int mapToLED(int row, int col) {    
     // Check if we're in a column that goes bottom-to-top
     bool isBottomToTop = (col % 2 == 0);
@@ -20,6 +24,72 @@ int mapToLED(int row, int col) {
     }
 }
 
+/* Sine wave */
+// Colors
+const CRGB BACKGROUND_COLOR = CRGB(20, 0, 30);  // Dark purple
+const CRGB WAVE_COLOR = CRGB(0, 150, 255);      // Light blue
+
+// Calculate the wave height at a given position
+float calculateWaveHeight(float x, float time, uint8_t amplitude, uint8_t wavelength) {
+    // Convert wavelength from columns (3-10) to radians
+    float frequency = TWO_PI / (wavelength * ROWS);
+    
+    // Calculate base sine wave
+    float wave = sin(frequency * x + time);
+    
+    // Scale amplitude from 1-5 rows
+    float scaledWave = wave * ((amplitude - 1) / 2);
+    
+    // Center the wave vertically
+    return ROWS / 2.0 + scaledWave;
+}
+
+// Draw a single frame of the animation
+void drawWaveFrame(float time, uint8_t amplitude, uint8_t wavelength, CRGB* leds) {
+    // Clear the display
+    fill_solid(leds, NUM_LEDS, BACKGROUND_COLOR);
+    
+    // Draw the wave for each column
+    for (int col = 0; col < COLS; col++) {
+        // Calculate wave height for this column
+        float waveHeight = calculateWaveHeight(col, time, amplitude, wavelength);
+        
+        // Draw the wave pixel and add some vertical blur for smoothness
+        for (int row = 0; row < ROWS; row++) {
+            float distanceFromWave = abs(row - waveHeight);
+            if (distanceFromWave < 1.0) {
+                uint8_t brightness = 255 * (1.0 - distanceFromWave);
+                int ledIndex = mapToLED(row, col);
+                leds[ledIndex] = WAVE_COLOR;
+                leds[ledIndex].nscale8(brightness);
+            }
+        }
+    }
+    
+    FastLED.show();
+}
+
+// Main animation loop
+void animateWave(uint8_t amplitude, uint8_t wavelength, CRGB* leds) {
+    static float time = 0;
+    
+    // Calculate time increment based on frame rate
+    float timeIncrement = TWO_PI / (2 * FRAMES_PER_SECOND);
+    
+    // Update animation
+    drawWaveFrame(time, amplitude, wavelength, leds);
+    time += timeIncrement;
+    
+    // Keep time bounded
+    if (time >= TWO_PI) {
+        time -= TWO_PI;
+    }
+    
+    FastLED.delay(1000 / FRAMES_PER_SECOND);
+}
+
+
+/* Pulsating bar */
 // Get the current bar width for a given row based on time
 int getBarWidth(int row, uint32_t currentMillis) {
     // Different ranges for each row
