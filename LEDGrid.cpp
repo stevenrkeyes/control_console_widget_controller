@@ -16,26 +16,32 @@ void LEDGrid::setup() {
 void LEDGrid::CheckDataSendHID() {
 }
 
-uint8_t remap(uint8_t value, uint8_t min, uint8_t max) {
-    return min + (uint8_t) (value * (max - min) / 255.0f);
-}
-
 void LEDGrid::UpdateAnimationFrame() {
+  // Maybe rename hue / saturation to more general names (fader_7, fader_8?)
   uint8_t hue = state.getLEDGridHue();
   uint8_t saturation = state.getLEDGridSaturation();
-  uint8_t missile_switch_state = state.getMissileSwitchState();
 
+  uint8_t missile_switch_state = state.getMissileSwitchState();
+ 
   // TODO make this switch case.
   if (missile_switch_state == 7) {
-    showPulsatingBars(hue, leds);
-  } else if (missile_switch_state == 6) {
-    // uint8_t wavelength = 5;
-    // uint8_t amplitude = 3;
-
-    uint8_t wavelength = remap(saturation, 3, 10);
-    uint8_t amplitude = remap(hue, 1, 5);
-
-    animateWave(amplitude, wavelength, leds);
+    // Serial.println("pulsing"); 
+    showPulsatingBars(hue, saturation, leds);
+  } else if (missile_switch_state == 6) { 
+    // Serial.println("wave");
+    animateWave(hue, saturation, leds);
+  } else if (missile_switch_state == 5) {
+    // Serial.println("pacman");
+    animatePacman(hue, saturation, leds);
+  } else if (missile_switch_state == 4) {
+    // Serial.println("triangle");
+    animateTriangle(hue, leds);
+  } else if (missile_switch_state == 3) {
+    // Serial.println("space invaders");  
+    animateInvader(hue, saturation, leds);  
+  } else if (missile_switch_state == 2) {
+    // Serial.println("space invaders");
+    animateRain(hue, saturation, leds);
   } else {
     // Fill the LEDs with a solid color based on state values set by last 2 faders.
     fill_solid(leds, LED_GRID_NUM_LEDS, CHSV(hue, saturation, 255));

@@ -57,4 +57,8 @@ void TriangleButtons::UpdateAnimationFrame() {
       analogWrite(TRIANGLE_BUTTONS_LED_PINS[i], led_brightness);
     }
   }
+  // sorry steven I will refactor this later.
+  // Keep blue and yellow lights always on.
+  analogWrite(TRIANGLE_BUTTONS_LED_PINS[0], 255);
+  analogWrite(TRIANGLE_BUTTONS_LED_PINS[1], 255);
 }
