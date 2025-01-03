@@ -312,7 +312,7 @@ const bool INVADER_SHAPE_ALT[5][5] = {
 };
 
 // Draw a single frame of the Space Invader
-void drawInvaderFrame(const InvaderConfig& config, bool useAltShape, CRGB* leds) {
+void _drawInvaderFrame(const InvaderConfig& config, bool useAltShape, CRGB* leds) {
     // Clear the display
     FastLED.clear();
     
@@ -361,11 +361,9 @@ void animateInvader(uint8_t colorHue, uint8_t saturation, CRGB* leds) {
         lastUpdate = currentTime;
     }
     
-    drawInvaderFrame(config, animationFrame, leds);
+    _drawInvaderFrame(config, animationFrame, leds);
     FastLED.delay(1000 / FRAMES_PER_SECOND);
 }
-
-// [Previous animation code remains unchanged...]
 
 // Raindrop configuration
 struct RainConfig {
@@ -386,14 +384,14 @@ struct Raindrop {
 Raindrop raindrops[MAX_DROPS];
 
 // Initialize raindrop system
-void initRain() {
+void _initRain() {
     for (int i = 0; i < MAX_DROPS; i++) {
         raindrops[i].active = false;
     }
 }
 
 // Create a new raindrop at the top of the display
-void createRaindrop(float baseVelocity) {
+void _createRaindrop(float baseVelocity) {
     // Find an inactive drop slot
     for (int i = 0; i < MAX_DROPS; i++) {
         if (!raindrops[i].active) {
@@ -408,7 +406,7 @@ void createRaindrop(float baseVelocity) {
 }
 
 // Draw a single frame of rain
-void drawRainFrame(const RainConfig& config, CRGB* leds) {
+void _drawRainFrame(const RainConfig& config, CRGB* leds) {
     // Clear the display
     FastLED.clear();
     fill_solid(leds, 50 , CRGB(25, 0, 60));
@@ -419,7 +417,7 @@ void drawRainFrame(const RainConfig& config, CRGB* leds) {
     
     // Randomly create new drops based on density
     if (random8() < config.density) {
-        createRaindrop(baseVelocity);
+        _createRaindrop(baseVelocity);
     }
     
     // Update and draw all active drops
@@ -466,10 +464,10 @@ void animateRain(uint8_t density, u_int8_t speed, CRGB* leds) {
     static bool initialized = false;
     
     if (!initialized) {
-        initRain();
+        _initRain();
         initialized = true;
     }
     
-    drawRainFrame(config, leds);
+    _drawRainFrame(config, leds);
     FastLED.delay(1000 / FRAMES_PER_SECOND);
 }

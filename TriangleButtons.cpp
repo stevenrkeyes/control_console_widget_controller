@@ -46,10 +46,11 @@ void TriangleButtons::UpdateAnimationFrame() {
   unsigned long timeSincePressMs;
   char led_brightness;
 
+  // Toggle red triangle button's LED based on logical on/off state.
   timeSincePressMs = ULONG_MAX;
   // Check that the current time is after the button press time to check that the button has ever been pressed
-  if (currentTimeMs > pressTimesMs[i]) {
-    timeSincePressMs = currentTimeMs - pressTimesMs[i];
+  if (currentTimeMs > pressTimesMs[2]) {
+    timeSincePressMs = currentTimeMs - pressTimesMs[2];
 
     if (activated[2]) {
       led_brightness = RampToValue(50, 255, 200, timeSincePressMs);
