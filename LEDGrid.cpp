@@ -17,30 +17,24 @@ void LEDGrid::CheckDataSendHID() {
 }
 
 void LEDGrid::UpdateAnimationFrame() {
-  // Maybe rename hue / saturation to more general names (fader_7, fader_8?)
+  // TODO: Rename hue / saturation and associated get/set to more general names,
   uint8_t hue = state.getLEDGridHue();
   uint8_t saturation = state.getLEDGridSaturation();
 
   uint8_t missile_switch_state = state.getMissileSwitchState();
  
-  // TODO make this switch case.
+  // TODO: Can add one more pattern for state 1 (default is 0).
   if (missile_switch_state == 7) {
-    // Serial.println("pulsing"); 
     showPulsatingBars(hue, saturation, leds);
   } else if (missile_switch_state == 6) { 
-    // Serial.println("wave");
     animateWave(hue, saturation, leds);
   } else if (missile_switch_state == 5) {
-    // Serial.println("pacman");
     animatePacman(hue, saturation, leds);
   } else if (missile_switch_state == 4) {
-    // Serial.println("triangle");
     animateTriangle(hue, leds);
   } else if (missile_switch_state == 3) {
-    // Serial.println("space invaders");  
     animateInvader(hue, saturation, leds);  
   } else if (missile_switch_state == 2) {
-    // Serial.println("space invaders");
     animateRain(hue, saturation, leds);
   } else {
     // Fill the LEDs with a solid color based on state values set by last 2 faders.
