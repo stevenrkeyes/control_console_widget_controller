@@ -16,26 +16,26 @@ void LEDGrid::setup() {
 void LEDGrid::CheckDataSendHID() {
 }
 
-uint8_t remap(uint8_t value, uint8_t min, uint8_t max) {
-    return min + (uint8_t) (value * (max - min) / 255.0f);
-}
-
 void LEDGrid::UpdateAnimationFrame() {
+  // TODO: Rename hue / saturation and associated get/set to more general names,
   uint8_t hue = state.getLEDGridHue();
   uint8_t saturation = state.getLEDGridSaturation();
+
   uint8_t missile_switch_state = state.getMissileSwitchState();
-
-  // TODO make this switch case.
+ 
+  // TODO: Can add one more pattern for state 1 (default is 0).
   if (missile_switch_state == 7) {
-    showPulsatingBars(hue, leds);
-  } else if (missile_switch_state == 6) {
-    // uint8_t wavelength = 5;
-    // uint8_t amplitude = 3;
-
-    uint8_t wavelength = remap(saturation, 3, 10);
-    uint8_t amplitude = remap(hue, 1, 5);
-
-    animateWave(amplitude, wavelength, leds);
+    showPulsatingBars(hue, saturation, leds);
+  } else if (missile_switch_state == 6) { 
+    animateWave(hue, saturation, leds);
+  } else if (missile_switch_state == 5) {
+    animatePacman(hue, saturation, leds);
+  } else if (missile_switch_state == 4) {
+    animateTriangle(hue, leds);
+  } else if (missile_switch_state == 3) {
+    animateInvader(hue, saturation, leds);  
+  } else if (missile_switch_state == 2) {
+    animateRain(hue, saturation, leds);
   } else {
     // Fill the LEDs with a solid color based on state values set by last 2 faders.
     fill_solid(leds, LED_GRID_NUM_LEDS, CHSV(hue, saturation, 255));

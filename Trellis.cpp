@@ -6,7 +6,7 @@
 #define X_DIM 4 //number of columns of keys
 
 // Game colors
-#define DEFAULT_COLOR 0x42a4f5
+#define DEFAULT_COLOR 0xC0C0C0
 #define SNAKE_COLOR 0x00FF00
 #define PELLET_COLOR 0xFF0000
 #define GAME_SPEED 300

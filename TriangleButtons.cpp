@@ -13,6 +13,9 @@ void TriangleButtons::setup() {
     pinMode(TRIANGLE_BUTTONS_PINS[i], INPUT_PULLUP);
     pinMode(TRIANGLE_BUTTONS_LED_PINS[i], OUTPUT);
   }
+  // Keep blue and yellow lights always on.
+  analogWrite(TRIANGLE_BUTTONS_LED_PINS[0], 255);
+  analogWrite(TRIANGLE_BUTTONS_LED_PINS[1], 255);
 }
 
 void TriangleButtons::CheckDataSendHID() {
@@ -43,18 +46,17 @@ void TriangleButtons::UpdateAnimationFrame() {
   unsigned long timeSincePressMs;
   char led_brightness;
 
-  for (int i = 0; i < TRIANGLE_BUTTONS_NUM; i++) {
-    timeSincePressMs = ULONG_MAX;
-    // Check that the current time is after the button press time to check that the button has ever been pressed
-    if (currentTimeMs > pressTimesMs[i]) {
-      timeSincePressMs = currentTimeMs - pressTimesMs[i];
+  // Toggle red triangle button's LED based on logical on/off state.
+  timeSincePressMs = ULONG_MAX;
+  // Check that the current time is after the button press time to check that the button has ever been pressed
+  if (currentTimeMs > pressTimesMs[2]) {
+    timeSincePressMs = currentTimeMs - pressTimesMs[2];
 
-      if (activated[i]) {
-        led_brightness = RampToValue(50, 255, 200, timeSincePressMs);
-      } else {
-        led_brightness = RampToValue(255, 0, 150, timeSincePressMs);
-      }
-      analogWrite(TRIANGLE_BUTTONS_LED_PINS[i], led_brightness);
+    if (activated[2]) {
+      led_brightness = RampToValue(50, 255, 200, timeSincePressMs);
+    } else {
+      led_brightness = RampToValue(255, 0, 150, timeSincePressMs);
     }
+    analogWrite(TRIANGLE_BUTTONS_LED_PINS[2], led_brightness);
   }
 }
